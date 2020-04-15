@@ -1,15 +1,13 @@
-import { useState, useRef, useMemo } from "react";
+import { useReducer, useRef, useMemo } from "react";
 
 export const useObject = <Obj extends Object>(obj: Obj): Obj => {
   const instance = useRef<Obj>(obj);
-  const [state, setState] = useState<Obj>(instance.current);
-
-  Object.assign(instance.current, state);
+  const [_, update] = useReducer(() => ({ ...instance.current }), obj);
 
   const proxy = new Proxy<Obj>({} as Obj, {
     set: (_, prop, value) => {
       instance.current[prop as keyof Obj] = value;
-      setState({ ...instance.current });
+      update();
       return true;
     },
     get: (_, prop, reciever) => {
@@ -27,7 +25,6 @@ export const useClass = <Obj extends Object>(Constructor: {
   new (): Obj;
 }): Obj => {
   const instance = useRef<Obj>({} as Obj);
-  const update = useRef<number>();
 
   Object.setPrototypeOf(instance.current, Constructor.prototype);
 
@@ -36,11 +33,8 @@ export const useClass = <Obj extends Object>(Constructor: {
       new Proxy<Obj>({} as Obj, {
         set: (_, prop, value) => {
           instance.current[prop as keyof Obj] = value;
-          if (setState !== undefined) {
-            clearTimeout(update.current);
-            update.current = setTimeout(() => {
-              setState({ ...instance.current });
-            });
+          if (update !== undefined) {
+            update();
           }
           return true;
         },
@@ -59,9 +53,10 @@ export const useClass = <Obj extends Object>(Constructor: {
     proxy,
   ]) as Obj;
 
-  const [state, setState] = useState<Obj>(obj);
-
-  Object.assign(instance.current, state);
+  const [_, update] = useReducer(
+    () => ({ ...instance.current }),
+    instance.current
+  );
 
   return obj;
 };
