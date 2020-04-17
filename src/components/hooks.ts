@@ -1,4 +1,4 @@
-import { useReducer, useRef, useMemo } from "react";
+import { useReducer, useRef, useMemo, createContext, useContext } from "react";
 
 export const useObject = <Obj extends Object>(obj: Obj): Obj => {
   const instance = useRef<Obj>(obj);
@@ -21,9 +21,12 @@ export const useObject = <Obj extends Object>(obj: Obj): Obj => {
   return proxy as Obj;
 };
 
-export const useClass = <Obj extends Object>(Constructor: {
-  new (): Obj;
-}): Obj => {
+export const useClass = <Obj extends Object, Args extends any[] = []>(
+  Constructor: {
+    new (...args: Args): Obj;
+  },
+  ...args: Args
+): Obj => {
   const instance = useRef<Obj>({} as Obj);
 
   Object.setPrototypeOf(instance.current, Constructor.prototype);
@@ -48,7 +51,7 @@ export const useClass = <Obj extends Object>(Constructor: {
     [instance]
   );
 
-  const obj = useMemo(() => Constructor.apply(proxy) as unknown, [
+  useMemo(() => Constructor.apply(proxy, args) as unknown, [
     Constructor,
     proxy,
   ]) as Obj;
@@ -58,5 +61,5 @@ export const useClass = <Obj extends Object>(Constructor: {
     instance.current
   );
 
-  return obj;
+  return proxy;
 };
