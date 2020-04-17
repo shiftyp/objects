@@ -1,16 +1,27 @@
 import { useReducer, useRef, useMemo } from "react";
 
-export const useObject = <Obj extends Object>(obj: Obj): Obj => {
+export const useObject = <Obj extends Object>(
+  obj: Obj
+): AsyncIterable<Obj> & Obj => {
   const instance = useRef<Obj>(obj);
+  const updateGenerator = useMemo(async function* (): AsyncGenerator<Obj> {
+    while (true) {
+      yield proxy;
+    }
+  }, []);
   const [_, update] = useReducer(() => ({ ...instance.current }), obj);
 
   const proxy = new Proxy<Obj>({} as Obj, {
     set: (_, prop, value) => {
       instance.current[prop as keyof Obj] = value;
+      updateGenerator.next();
       update();
       return true;
     },
-    get: (_, prop, reciever) => {
+    get: (_, prop) => {
+      if (prop === Symbol.asyncIterator) {
+        return () => updateGenerator;
+      }
       return instance.current[prop as keyof Obj];
     },
     ownKeys: () => {
@@ -18,7 +29,7 @@ export const useObject = <Obj extends Object>(obj: Obj): Obj => {
     },
   });
 
-  return proxy as Obj;
+  return proxy as Obj & AsyncIterable<Obj>;
 };
 
 export const useClass = <Obj extends Object, Args extends any[] = []>(

@@ -21,8 +21,8 @@ export const UpdateSection: React.FC<{ updates: Readonly<Update>[] }> = ({
   return (
     <>
       <ul>
-        {errors.map((err) => (
-          <li>{err.message}</li>
+        {errors.map((err, i) => (
+          <li key={i}>{err.message}</li>
         ))}
       </ul>
       {children}
