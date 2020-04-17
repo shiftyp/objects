@@ -3,7 +3,7 @@
   "compilerOptions": {
     "strict": true,
     "esModuleInterop": true,
-    "lib": ["dom", "es2015"],
+    "lib": ["dom", "esnext"],
     "jsx": "react",
     "target": "es5",
     "allowJs": true,
