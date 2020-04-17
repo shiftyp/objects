@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-import { useClass, useObject } from "./hooks";
+import { useClass } from "./hooks";
 
 import { DogForm } from "./DogForm";
 import { UpdateSection } from "./UpdateSection";
