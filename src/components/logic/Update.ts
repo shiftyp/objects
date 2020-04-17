@@ -1,4 +1,4 @@
-export class Update<Data> {
+export class Update<Data = any> {
   updating: boolean = false;
   error: Error | null = null;
   data: Data | null = null;
