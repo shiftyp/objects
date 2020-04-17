@@ -4,17 +4,12 @@ export const useObject = <Obj extends Object>(
   obj: Obj
 ): AsyncIterable<Obj> & Obj => {
   const instance = useRef<Obj>(obj);
-  const updateGenerator = useMemo(async function* (): AsyncGenerator<Obj> {
-    while (true) {
-      yield proxy;
-    }
-  }, []);
-  const [_, update] = useReducer(() => ({ ...instance.current }), obj);
+  const [state, update] = useReducer(() => ({ ...instance.current }), obj);
 
   const proxy = new Proxy<Obj>({} as Obj, {
     set: (_, prop, value) => {
       instance.current[prop as keyof Obj] = value;
-      updateGenerator.next();
+      resolveUpdatePromise.current && resolveUpdatePromise.current();
       update();
       return true;
     },
@@ -28,6 +23,21 @@ export const useObject = <Obj extends Object>(
       return Reflect.ownKeys(instance.current);
     },
   });
+
+  const resolveUpdatePromise = useRef<() => void>();
+  const updatePromise = useRef<Promise<void>>();
+
+  updatePromise.current = useMemo(
+    () => new Promise((resolve) => (resolveUpdatePromise.current = resolve)),
+    [state]
+  );
+
+  const updateGenerator = useMemo(async function* (): AsyncGenerator<Obj> {
+    while (true) {
+      await updatePromise.current;
+      yield proxy;
+    }
+  }, []);
 
   return proxy as Obj & AsyncIterable<Obj>;
 };
