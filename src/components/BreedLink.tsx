@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 
 import { Text, Link, Button, Card } from "rebass";
 
-import { useClass } from "./hooks";
+import { useInstance } from "./hooks/useInstance";
 
 import { ArticleFetch } from "./logic/ArticleFetch";
 
@@ -12,7 +12,7 @@ export const BreedLink: React.FC<{
   buttonMode?: boolean;
   onClick: () => void;
 }> = ({ breed, count, buttonMode = false, onClick }) => {
-  const [article] = useClass(ArticleFetch);
+  const [article] = useInstance(ArticleFetch);
 
   useEffect(() => {
     article.load(breed);

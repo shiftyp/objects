@@ -11,7 +11,9 @@ import { BreedIndex } from "./BreedIndex";
 import { UpdateSection } from "./UpdateSection";
 import { ThemeProvider } from "./ThemeProvider";
 
-import { useArray, useClass, useClasses, useObject } from "./hooks";
+import { useInstance } from "./hooks/useInstance";
+import { useInstances } from "./hooks/useInstances";
+import { useObject } from "./hooks/useObject";
 
 import { SearchTerms } from "./logic/SearchTerms";
 import { ImageSearch } from "./logic/ImageSearch";
@@ -29,15 +31,15 @@ const useGame = () => {
       | null,
   });
   const [counts, resetCounts] = useObject({} as Record<string, number>);
-  const [breeds] = useClass(Breeds);
-  const [searches, resetSearches] = useArray(
+  const [breeds] = useInstance(Breeds);
+  const [searches, resetSearches] = useObject(
     [] as Array<ImageSearch & AsyncIterable<ImageSearch>>
   );
-  const makeImageSearch = useClasses(ImageSearch);
-  const [terms, resetTerms] = useClass(SearchTerms, breeds);
+  const newSearch = useInstances(ImageSearch);
+  const [terms, resetTerms] = useInstance(SearchTerms, breeds);
 
   const addDog = async () => {
-    const imageSearch = makeImageSearch(terms, searchId.current++);
+    const imageSearch = newSearch(terms, searchId.current++);
 
     counts[imageSearch.breed] = (counts[imageSearch.breed] || 0) + 1;
 
@@ -106,15 +108,17 @@ const useGame = () => {
   }, [breeds]);
 
   return {
+    searches: searches as ReadonlyArray<
+      ImageSearch & AsyncIterable<ImageSearch>
+    >,
+    counts: counts as Readonly<Record<string, number>>,
     resetGame,
     toggleRandomMode,
     onBreedSelect,
     onImageClick,
     addDog,
-    searches,
     terms,
     breeds,
-    counts,
     ...local,
   };
 };
