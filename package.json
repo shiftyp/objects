@@ -15,7 +15,6 @@
     "emotion-theming": "^10.0.27",
     "react": "^0.14.0 || ^15.0.0-0 || ^16.0.0-0",
     "react-dom": "^16.12.0",
-    "react-masonry-component": "^6.2.1",
     "react-masonry-css": "^1.0.14",
     "rebass": "^4.0.7"
   },
@@ -23,8 +22,8 @@
     "@types/react": "16.9.19",
     "@types/react-dom": "16.9.5",
     "parcel-bundler": "1.12.4",
-    "sass": "^1.26.3",
-    "typescript": "3.7.5"
+    "sass": "1.26.3",
+    "typescript": "3.8.3"
   },
   "scripts": {
     "start": "parcel ./src/index.html"
