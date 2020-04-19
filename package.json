@@ -15,7 +15,7 @@
     "emotion-theming": "^10.0.27",
     "react": "^0.14.0 || ^15.0.0-0 || ^16.0.0-0",
     "react-dom": "^16.12.0",
-    "react-masonry-css": "^1.0.14",
+    "react-masonry-component": "6.2.1",
     "rebass": "^4.0.7"
   },
   "devDependencies": {
