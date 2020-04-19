@@ -1,4 +1,4 @@
-import { useReducer, useRef, useMemo } from "react";
+import { useReducer, useRef, useMemo } from 'react';
 
 export const useInstance = <Obj extends Object, Args extends any[] = []>(
   Constructor: {

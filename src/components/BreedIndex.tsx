@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
-import { Flex, Card } from "rebass";
-import { BreedLink } from "./BreedLink";
+import { Flex, Card } from 'rebass';
+import { BreedLink } from './BreedLink';
 
 export const BreedIndex: React.FC<{
   counts: Record<string, number>;

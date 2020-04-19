@@ -1,5 +1,5 @@
-import { useArray } from "./useArray";
-import { useBasicObject } from "./useBasicObject";
+import { useArray } from './useArray';
+import { useBasicObject } from './useBasicObject';
 
 export function useObject<Obj extends Record<string, any>>(
   obj: Obj

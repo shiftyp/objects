@@ -1,4 +1,4 @@
-import { WikiApiFetch } from "./WikiApiFetch";
+import { WikiApiFetch } from './WikiApiFetch';
 
 interface ArticleData {
   href: string;
@@ -20,12 +20,12 @@ export class ArticleFetch extends WikiApiFetch<ArticleData, ArticleResponse> {
       return;
     }
 
-    const terms = breed.split(" ");
+    const terms = breed.split(' ');
 
     const possibleTerms = [
       `${breed} dog`,
-      `${terms.reverse().join(" ")} dog`,
-      `${terms.reverse().join(" ")}`,
+      `${terms.reverse().join(' ')} dog`,
+      `${terms.reverse().join(' ')}`,
       breed,
     ];
 

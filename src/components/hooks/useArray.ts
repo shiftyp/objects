@@ -1,4 +1,4 @@
-import { useReducer, useRef, useMemo } from "react";
+import { useReducer, useRef, useMemo } from 'react';
 
 export const useArray = <Obj extends Array<any>>(
   obj: Obj
@@ -31,8 +31,8 @@ export const useArray = <Obj extends Array<any>>(
             return () => updateGenerator;
           }
           if (
-            typeof prop === "string" &&
-            ["unshift", "push", "pop", "splice"].indexOf(prop) !== -1
+            typeof prop === 'string' &&
+            ['unshift', 'push', 'pop', 'splice'].indexOf(prop) !== -1
           ) {
             return (...args: any[]) => {
               const ret = instance.current[prop](...args);
@@ -40,7 +40,7 @@ export const useArray = <Obj extends Array<any>>(
               return ret;
             };
           }
-          if (typeof instance.current[prop] === "function") {
+          if (typeof instance.current[prop] === 'function') {
             return (...args: any[]) => instance.current[prop](...args);
           }
 

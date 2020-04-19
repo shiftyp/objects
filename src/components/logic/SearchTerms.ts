@@ -1,10 +1,10 @@
-import { Breeds } from "./Breeds";
+import { Breeds } from './Breeds';
 
 export class SearchTerms {
   private _selected: string | null = null;
 
   get selected() {
-    return this._selected || "";
+    return this._selected || '';
   }
 
   set selected(selected: string) {

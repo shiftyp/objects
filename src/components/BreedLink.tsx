@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
 
-import { Text, Link, Button, Card } from "rebass";
+import { Text, Link, Button, Card } from 'rebass';
 
-import { useInstance } from "./hooks/useInstance";
+import { useInstance } from './hooks/useInstance';
 
-import { ArticleFetch } from "./logic/ArticleFetch";
+import { ArticleFetch } from './logic/ArticleFetch';
 
 export const BreedLink: React.FC<{
   breed: string;

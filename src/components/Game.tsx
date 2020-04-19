@@ -1,25 +1,25 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from 'react';
 
-import Masonry from "react-masonry-component";
-import { Button, Flex, Box, Text } from "rebass";
-import { Checkbox, Label } from "@rebass/forms";
+import Masonry from 'react-masonry-component';
+import { Button, Flex, Box, Text } from 'rebass';
+import { Checkbox, Label } from '@rebass/forms';
 
-import { BreedForm } from "./BreedForm";
-import { RandomForm } from "./RandomForm";
-import { DogImage } from "./DogImage";
-import { BreedIndex } from "./BreedIndex";
-import { UpdateSection } from "./UpdateSection";
-import { ThemeProvider } from "./ThemeProvider";
+import { BreedForm } from './BreedForm';
+import { RandomForm } from './RandomForm';
+import { DogImage } from './DogImage';
+import { BreedIndex } from './BreedIndex';
+import { UpdateSection } from './UpdateSection';
+import { ThemeProvider } from './ThemeProvider';
 
-import { useInstance } from "./hooks/useInstance";
-import { useInstances } from "./hooks/useInstances";
-import { useObject } from "./hooks/useObject";
+import { useInstance } from './hooks/useInstance';
+import { useInstances } from './hooks/useInstances';
+import { useObject } from './hooks/useObject';
 
-import { SearchTerms } from "./logic/SearchTerms";
-import { ImageSearch } from "./logic/ImageSearch";
-import { Breeds } from "./logic/Breeds";
+import { SearchTerms } from './logic/SearchTerms';
+import { ImageSearch } from './logic/ImageSearch';
+import { Breeds } from './logic/Breeds';
 
-import { shuffle } from "../utils";
+import { shuffle } from '../utils';
 
 const useGame = () => {
   const searchId = useRef<number>(0);
@@ -54,12 +54,12 @@ const useGame = () => {
   ) => {
     local.selectedImageSearch = search;
     local.selectMode = true;
-    window.addEventListener("click", endSelectMode);
+    window.addEventListener('click', endSelectMode);
   };
 
   const endSelectMode = () => {
     local.selectMode = false;
-    window.removeEventListener("click", endSelectMode);
+    window.removeEventListener('click', endSelectMode);
   };
 
   const onImageClick = (search: ImageSearch & AsyncIterable<ImageSearch>) => (
@@ -85,7 +85,7 @@ const useGame = () => {
           delete counts[breed];
         }
       } else {
-        console.error("Oops");
+        console.error('Oops');
       }
 
       endSelectMode();

@@ -1,4 +1,4 @@
-import { useReducer } from "react";
+import { useReducer } from 'react';
 
 export function useInstances<
   Obj extends Object,

@@ -1,4 +1,4 @@
-import { useReducer, useRef, useMemo } from "react";
+import { useReducer, useRef, useMemo } from 'react';
 
 export const useBasicObject = <Obj extends Object>(
   obj: Obj

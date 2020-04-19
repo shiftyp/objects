@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
-import { Image, Box } from "rebass";
+import { Image, Box } from 'rebass';
 
-import { ImageSearch } from "./logic/ImageSearch";
+import { ImageSearch } from './logic/ImageSearch';
 
 export const DogImage: React.FC<{
   imageSearch: ImageSearch;
@@ -16,11 +16,11 @@ export const DogImage: React.FC<{
           style={{
             maxWidth: 200,
             opacity: fadeOut ? 0.5 : 1,
-            cursor: "pointer",
+            cursor: 'pointer',
           }}
           onClick={onClick}
           src={imageSearch.data}
-          alt={imageSearch.breed || ""}
+          alt={imageSearch.breed || ''}
         />
       ) : null}
     </Box>

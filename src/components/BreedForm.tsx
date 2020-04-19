@@ -1,8 +1,8 @@
-import React, { useRef, FormEvent, ChangeEvent } from "react";
-import { Select } from "@rebass/forms";
-import { Button, Box, Flex } from "rebass";
+import React, { useRef, FormEvent, ChangeEvent } from 'react';
+import { Select } from '@rebass/forms';
+import { Button, Box, Flex } from 'rebass';
 
-import { SearchTerms } from "./logic/SearchTerms";
+import { SearchTerms } from './logic/SearchTerms';
 
 export const BreedForm: React.FC<{
   terms: SearchTerms;

@@ -1,5 +1,5 @@
-import { DogApiFetch } from "./DogApiFetch";
-import { SearchTerms } from "./SearchTerms";
+import { DogApiFetch } from './DogApiFetch';
+import { SearchTerms } from './SearchTerms';
 
 export class ImageSearch extends DogApiFetch<string> {
   constructor(
@@ -11,10 +11,10 @@ export class ImageSearch extends DogApiFetch<string> {
   }
 
   get breed() {
-    return this.terms.join(" ");
+    return this.terms.join(' ');
   }
 
   async search() {
-    return await this.fetch(`/breed/${this.terms.join("/")}/images/random`);
+    return await this.fetch(`/breed/${this.terms.join('/')}/images/random`);
   }
 }
