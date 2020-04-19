@@ -1,7 +1,7 @@
 import * as React from "react";
 import { render } from "react-dom";
 
-import App from "./components/App";
+import { Game } from "./components/Game";
 
 const rootElement = document.getElementById("root");
-render(<App />, rootElement);
+render(<Game />, rootElement);
