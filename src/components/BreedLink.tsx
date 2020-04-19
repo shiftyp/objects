@@ -21,7 +21,11 @@ export const BreedLink: React.FC<{
   const text =
     article.data?.href && !buttonMode ? (
       <Text>
-        <Link href={article.data.href} title={`${breed} on Wikipedia`}>
+        <Link
+          href={article.data.href}
+          title={`${breed} on Wikipedia`}
+          target="_blank"
+        >
           {article.data?.title || breed}
         </Link>
         : {count}
