@@ -1,26 +1,16 @@
-import { ApiFetch } from "./ApiFetch";
-import { BreedTerms } from "./breeds/BreedTerms";
+import { DogApiFetch } from "./DogApiFetch";
+import { SearchTerms } from "./SearchTerms";
 
-export class ImageSearch extends ApiFetch<string> {
-  breed: string | null = null;
-
-  constructor(private terms: BreedTerms) {
+export class ImageSearch extends DogApiFetch<string> {
+  constructor(searchTerms: SearchTerms, private terms = searchTerms.toArray()) {
     super();
   }
 
-  search() {
-    let terms = null;
+  get breed() {
+    return this.terms.join(" ");
+  }
 
-    try {
-      terms = this.terms.toArray();
-    } catch (error) {
-      this.failure(error);
-    }
-
-    if (terms !== null) {
-      this.breed = terms.join(" ");
-
-      return this.fetch(`breed/${terms.join("/")}/images/random`);
-    }
+  async search() {
+    return await this.fetch(`/breed/${this.terms.join("/")}/images/random`);
   }
 }
