@@ -1,16 +1,22 @@
 import { useReducer, useRef, useMemo } from "react";
 
-export const useObject = <Obj extends Object>(obj: Obj): Obj => {
+export const useObject = <Obj extends Object>(
+  obj: Obj
+): AsyncIterable<Obj> & Obj => {
   const instance = useRef<Obj>(obj);
-  const [_, update] = useReducer(() => ({ ...instance.current }), obj);
+  const [state, update] = useReducer(() => ({ ...instance.current }), obj);
 
   const proxy = new Proxy<Obj>({} as Obj, {
     set: (_, prop, value) => {
       instance.current[prop as keyof Obj] = value;
+      resolveUpdatePromise.current && resolveUpdatePromise.current();
       update();
       return true;
     },
-    get: (_, prop, reciever) => {
+    get: (_, prop) => {
+      if (prop === Symbol.asyncIterator) {
+        return () => updateGenerator;
+      }
       return instance.current[prop as keyof Obj];
     },
     ownKeys: () => {
@@ -18,7 +24,22 @@ export const useObject = <Obj extends Object>(obj: Obj): Obj => {
     },
   });
 
-  return proxy as Obj;
+  const resolveUpdatePromise = useRef<() => void>();
+  const updatePromise = useRef<Promise<void>>();
+
+  updatePromise.current = useMemo(
+    () => new Promise((resolve) => (resolveUpdatePromise.current = resolve)),
+    [state]
+  );
+
+  const updateGenerator = useMemo(async function* (): AsyncGenerator<Obj> {
+    while (true) {
+      await updatePromise.current;
+      yield proxy;
+    }
+  }, []);
+
+  return proxy as Obj & AsyncIterable<Obj>;
 };
 
 export const useClass = <Obj extends Object, Args extends any[] = []>(
@@ -26,7 +47,7 @@ export const useClass = <Obj extends Object, Args extends any[] = []>(
     new (...args: Args): Obj;
   },
   ...args: Args
-): Obj => {
+): Obj & AsyncIterable<Obj> => {
   const instance = useRef<Obj>({} as Obj);
 
   Object.setPrototypeOf(instance.current, Constructor.prototype);
@@ -36,12 +57,21 @@ export const useClass = <Obj extends Object, Args extends any[] = []>(
       new Proxy<Obj>({} as Obj, {
         set: (_, prop, value) => {
           instance.current[prop as keyof Obj] = value;
+          if (
+            resolveUpdatePromise !== undefined &&
+            resolveUpdatePromise.current !== undefined
+          ) {
+            resolveUpdatePromise.current();
+          }
           if (update !== undefined) {
             update();
           }
           return true;
         },
         get: (_, prop, reciever) => {
+          if (prop === Symbol.asyncIterator) {
+            return () => updateGenerator;
+          }
           return instance.current[prop as keyof Obj];
         },
         ownKeys: () => {
@@ -56,10 +86,25 @@ export const useClass = <Obj extends Object, Args extends any[] = []>(
     proxy,
   ]) as Obj;
 
-  const [_, update] = useReducer(
+  const [state, update] = useReducer(
     () => ({ ...instance.current }),
     instance.current
   );
 
-  return proxy;
+  const resolveUpdatePromise = useRef<() => void>();
+  const updatePromise = useRef<Promise<void>>();
+
+  updatePromise.current = useMemo(
+    () => new Promise((resolve) => (resolveUpdatePromise.current = resolve)),
+    [state]
+  );
+
+  const updateGenerator = useMemo(async function* (): AsyncGenerator<Obj> {
+    while (true) {
+      await updatePromise.current;
+      yield proxy;
+    }
+  }, []);
+
+  return proxy as Obj & AsyncIterable<Obj>;
 };
