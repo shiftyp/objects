@@ -27,7 +27,7 @@ export const BreedLink: React.FC<{
         : {count}
       </Text>
     ) : (
-      <Text onClick={onClick}>
+      <Text>
         {breed}: {count}
       </Text>
     );
