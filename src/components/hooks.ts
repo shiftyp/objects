@@ -19,7 +19,7 @@ export const useObject = <Obj extends Object>(
 
   const proxy = useMemo(
     () =>
-      new Proxy<Obj>({} as Obj, {
+      new Proxy<Obj>(instance.current, {
         set: (_, prop, value) => {
           instance.current[prop as keyof Obj] = value;
           resolveUpdatePromise.current && resolveUpdatePromise.current();
@@ -35,8 +35,12 @@ export const useObject = <Obj extends Object>(
         ownKeys: () => {
           return Reflect.ownKeys(instance.current);
         },
+        deleteProperty: (_, prop) => {
+          delete instance.current[prop as keyof Obj];
+          return true;
+        },
       }),
-    [resetCounter]
+    [instance.current, resetCounter]
   );
 
   const resolveUpdatePromise = useRef<() => void>();
@@ -79,7 +83,7 @@ export const useArray = <Obj extends Array<any>>(
 
   const proxy = useMemo(
     () =>
-      new Proxy<Obj>({} as Obj, {
+      new Proxy<Obj>(instance.current, {
         set: (_, prop, value) => {
           instance.current[prop as keyof Obj] = value;
           resolveUpdatePromise.current && resolveUpdatePromise.current();
@@ -100,13 +104,17 @@ export const useArray = <Obj extends Array<any>>(
               return ret;
             };
           }
+          if (typeof instance.current[prop] === "function") {
+            return (...args: any[]) => instance.current[prop](...args);
+          }
+
           return instance.current[prop as keyof Obj];
         },
         ownKeys: () => {
           return Reflect.ownKeys(instance.current);
         },
       }),
-    [resetCounter]
+    [instance.current, resetCounter]
   );
 
   const resolveUpdatePromise = useRef<() => void>();

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useRef } from "react";
 
 import Masonry from "react-masonry-component";
 import { Button, Flex, Box, Text } from "rebass";
@@ -20,6 +20,7 @@ import { Breeds } from "./logic/Breeds";
 import { shuffle } from "../utils";
 
 export const Game: React.FC = () => {
+  const searchId = useRef<number>(0);
   const [local, resetLocal] = useObject({
     randomMode: true,
     selectMode: false,
@@ -27,6 +28,7 @@ export const Game: React.FC = () => {
       | (ImageSearch & AsyncIterable<ImageSearch>)
       | null,
   });
+  const [counts, resetCounts] = useObject({} as Record<string, number>);
   const [breeds] = useClass(Breeds);
   const [imageSearches, resetImageSeaches] = useArray(
     [] as Array<ImageSearch & AsyncIterable<ImageSearch>>
@@ -35,9 +37,13 @@ export const Game: React.FC = () => {
   const [searchTerms, resetSearchTerms] = useClass(SearchTerms, breeds);
 
   const addDog = async () => {
-    const imageSearch = makeImageSearch(searchTerms);
+    const imageSearch = makeImageSearch(searchTerms, searchId.current++);
+
+    counts[imageSearch.breed] = (counts[imageSearch.breed] || 0) + 1;
+
     imageSearches.push(imageSearch);
     shuffle(imageSearches);
+
     await imageSearch.search();
   };
 
@@ -67,13 +73,26 @@ export const Game: React.FC = () => {
       local.selectedImageSearch &&
       local.selectedImageSearch.breed === breed
     ) {
-      imageSearches.splice(imageSearches.indexOf(local.selectedImageSearch));
+      const index = imageSearches.indexOf(local.selectedImageSearch);
+
+      if (index !== -1) {
+        imageSearches.splice(index, 1);
+        counts[breed] = (counts[breed] || 1) - 1;
+
+        if (counts[breed] === 0) {
+          delete counts[breed];
+        }
+      } else {
+        console.error("Oops");
+      }
+
       endSelectMode();
     }
   };
 
   const resetGame = () => {
     resetLocal();
+    resetCounts();
     resetImageSeaches();
     resetSearchTerms();
   };
@@ -87,46 +106,42 @@ export const Game: React.FC = () => {
   }, [breeds]);
 
   const images: React.ReactNode[] = [];
-  const counts: Record<string, number> = {};
 
   for (let i = imageSearches.length - 1; i >= 0; i--) {
     const search = imageSearches[i];
 
     images.push(
       <DogImage
+        key={search.id}
         imageSearch={search}
         onClick={onImageClick(search)}
         fadeOut={local.selectMode && local.selectedImageSearch !== search}
       />
     );
-
-    counts[search.breed] = (counts[search.breed] || 0) + 1;
   }
 
   return (
     <ThemeProvider>
       <UpdateSection updates={[breeds, ...imageSearches]}>
         <Flex>
-          <Flex>
-            {local.randomMode ? (
-              <RandomForm terms={searchTerms} addDog={addDog} />
-            ) : (
-              <BreedForm terms={searchTerms} addDog={addDog} />
-            )}
-            <Box mr={10}>
-              <Button onClick={resetGame}>Reset</Button>
-            </Box>
-            <Flex alignItems="center">
-              <Label>
-                <Checkbox
-                  checked={local.randomMode}
-                  onChange={toggleRandomMode}
-                />
-                <Flex alignItems="center">
-                  <Text fontFamily="sans-serif">Random Mode</Text>
-                </Flex>
-              </Label>
-            </Flex>
+          {local.randomMode ? (
+            <RandomForm terms={searchTerms} addDog={addDog} />
+          ) : (
+            <BreedForm terms={searchTerms} addDog={addDog} />
+          )}
+          <Box mr={10}>
+            <Button onClick={resetGame}>Reset</Button>
+          </Box>
+          <Flex alignItems="center">
+            <Label>
+              <Checkbox
+                checked={local.randomMode}
+                onChange={toggleRandomMode}
+              />
+              <Flex alignItems="center">
+                <Text fontFamily="sans-serif">Random Mode</Text>
+              </Flex>
+            </Label>
           </Flex>
         </Flex>
         <BreedIndex

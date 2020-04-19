@@ -19,16 +19,16 @@ export const BreedLink: React.FC<{
   }, [article, breed]);
 
   const text =
-    article.data && !buttonMode ? (
+    article.data?.href && !buttonMode ? (
       <Text>
-        <Link href={article.data} title={`${breed} on Wikipedia`}>
-          {breed}
+        <Link href={article.data.href} title={`${breed} on Wikipedia`}>
+          {article.data?.title || breed}
         </Link>
         : {count}
       </Text>
     ) : (
       <Text>
-        {breed}: {count}
+        {article.data?.title || breed}: {count}
       </Text>
     );
 
