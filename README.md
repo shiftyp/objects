@@ -4,6 +4,8 @@ The repository is called Object Hooks Test, which belies its true [purpose](#pur
 
 ![Screen capture of application](./assets/screencap.gif)
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/357c124b-d428-4d01-a7b2-c46ebe5a1815/deploy-status)](https://app.netlify.com/sites/object-hooks-test/deploys)
+
 # Purpose
 
 The purpose of this repository is to test a group of novel [React Hooks](https://reactjs.org/docs/hooks-intro.html), all of which revolve around mutable state. These hooks are:
