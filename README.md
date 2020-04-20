@@ -12,7 +12,7 @@ The purpose of this repository is to test a group of novel [React Hooks](https:/
 2. [useInstance](#useinstance)
 3. [useInstances](#useinstances)
 
-The examples in this readme are simplified, but look in the source (you can start with [Game.tsx](./src/game.tsx)!) for more realistic usages. Lets get started!
+The examples in this readme are simplified, but look in the source (you can start with [Game.tsx](./src/components/Game.tsx)!) for more realistic usages. Lets get started!
 
 # useObject
 
