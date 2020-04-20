@@ -2,9 +2,9 @@ import React, { FormEvent, ChangeEvent } from 'react';
 import { Input } from '@rebass/forms';
 import { Button, Box, Flex } from 'rebass';
 
-import { useObject } from './hooks/useObject';
+import { useObject } from '../hooks/useObject';
 
-import { SearchTerms } from './logic/SearchTerms';
+import { SearchTerms } from '../logic/SearchTerms';
 
 export const RandomForm: React.FC<{
   terms: SearchTerms;

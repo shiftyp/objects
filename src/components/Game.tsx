@@ -11,13 +11,13 @@ import { BreedIndex } from './BreedIndex';
 import { UpdateSection } from './UpdateSection';
 import { ThemeProvider } from './ThemeProvider';
 
-import { useInstance } from './hooks/useInstance';
-import { useInstances } from './hooks/useInstances';
-import { useObject } from './hooks/useObject';
+import { useInstance } from '../hooks/useInstance';
+import { useInstances } from '../hooks/useInstances';
+import { useObject } from '../hooks/useObject';
 
-import { SearchTerms } from './logic/SearchTerms';
-import { ImageSearch } from './logic/ImageSearch';
-import { Breeds } from './logic/Breeds';
+import { SearchTerms } from '../logic/SearchTerms';
+import { ImageSearch } from '../logic/ImageSearch';
+import { Breeds } from '../logic/Breeds';
 
 import { shuffle } from '../utils';
 
@@ -30,18 +30,27 @@ const useGame = () => {
       | (ImageSearch & AsyncIterable<ImageSearch>)
       | null,
   });
-  const [counts, resetCounts] = useObject({} as Record<string, number>);
+  const [counts, resetCounts] = useObject(
+    {} as Record<string, number>
+  );
   const [breeds] = useInstance(Breeds);
   const [searches, resetSearches] = useObject(
     [] as Array<ImageSearch & AsyncIterable<ImageSearch>>
   );
   const newSearch = useInstances(ImageSearch);
-  const [terms, resetTerms] = useInstance(SearchTerms, breeds);
+  const [terms, resetTerms] = useInstance(
+    SearchTerms,
+    breeds
+  );
 
   const addDog = async () => {
-    const imageSearch = newSearch(terms, searchId.current++);
+    const imageSearch = newSearch(
+      terms,
+      searchId.current++
+    );
 
-    counts[imageSearch.breed] = (counts[imageSearch.breed] || 0) + 1;
+    counts[imageSearch.breed] =
+      (counts[imageSearch.breed] || 0) + 1;
 
     searches.push(imageSearch);
     shuffle(searches);
@@ -62,9 +71,9 @@ const useGame = () => {
     window.removeEventListener('click', endSelectMode);
   };
 
-  const onImageClick = (search: ImageSearch & AsyncIterable<ImageSearch>) => (
-    e: React.MouseEvent
-  ) => {
+  const onImageClick = (
+    search: ImageSearch & AsyncIterable<ImageSearch>
+  ) => (e: React.MouseEvent) => {
     if (local.selectMode) endSelectMode();
     e.stopPropagation();
     startSelectMode(search);
@@ -75,7 +84,9 @@ const useGame = () => {
       local.selectedImageSearch &&
       local.selectedImageSearch.breed === breed
     ) {
-      const index = searches.indexOf(local.selectedImageSearch);
+      const index = searches.indexOf(
+        local.selectedImageSearch
+      );
 
       if (index !== -1) {
         searches.splice(index, 1);
@@ -149,7 +160,9 @@ export const Game: React.FC = () => {
         key={search.id}
         imageSearch={search}
         onClick={onImageClick(search)}
-        fadeOut={selectMode && selectedImageSearch !== search}
+        fadeOut={
+          selectMode && selectedImageSearch !== search
+        }
       />
     );
   }
@@ -168,9 +181,14 @@ export const Game: React.FC = () => {
           </Box>
           <Flex alignItems="center">
             <Label>
-              <Checkbox checked={randomMode} onChange={toggleRandomMode} />
+              <Checkbox
+                checked={randomMode}
+                onChange={toggleRandomMode}
+              />
               <Flex alignItems="center">
-                <Text fontFamily="sans-serif">Random Mode</Text>
+                <Text fontFamily="sans-serif">
+                  Random Mode
+                </Text>
               </Flex>
             </Label>
           </Flex>

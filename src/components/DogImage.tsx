@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Image, Box } from 'rebass';
 
-import { ImageSearch } from './logic/ImageSearch';
+import { ImageSearch } from '../logic/ImageSearch';
 
 export const DogImage: React.FC<{
   imageSearch: ImageSearch;

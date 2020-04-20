@@ -1,5 +1,5 @@
 import React from 'react';
-import { Update } from './logic/Update';
+import { Update } from '../logic/Update';
 import { Spinner } from './Spinner';
 
 export const UpdateSection: React.FC<{ updates: Readonly<Update>[] }> = ({

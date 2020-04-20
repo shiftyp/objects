@@ -26,7 +26,8 @@
     "typescript": "3.8.3"
   },
   "scripts": {
-    "start": "parcel ./src/index.html"
+    "start": "parcel ./src/index.html",
+    "build": "parcel build ./src/index.html"
   },
   "browserslist": [
     ">0.2%",
