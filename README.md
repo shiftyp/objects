@@ -1,6 +1,6 @@
 # Object Hooks Test
 
-The repository is called Object Hooks Test, which belies its true [purpose](#purpose), but the compiled application is a matching game for dog breeds!
+The repository is called Object Hooks Test, which belies its true [purpose](#purpose), but the compiled application is a [matching game for dog breeds](https://object-hooks-test.netlify.app/)!
 
 ![Screen capture of application](./assets/screencap.gif)
 
