@@ -9,17 +9,16 @@ export const useInstance = <Obj extends Object, Args extends any[] = []>(
   },
   ...args: Args
 ): [HooksProxy<Obj>, () => void] => {
-  const instance = useRef<Obj>({} as Obj);
-  const update = useForceUpdate();
+  const [reset, resets] = useForceUpdate();
+  const instance = useRef<Obj>();
+
+  useMemo(() => {
+    instance.current = {} as Obj;
+  }, [resets]);
 
   const constructor = useInstances(Constructor, instance.current);
 
-  const proxy = useMemo(() => constructor(...args) as Obj, [instance.current]);
+  const proxy = useMemo(() => constructor(...args) as Obj, [resets]);
 
-  const resetInstance = () => {
-    instance.current = {} as Obj;
-    update;
-  };
-
-  return [proxy as HooksProxy<Obj>, resetInstance];
+  return [proxy as HooksProxy<Obj>, reset];
 };
