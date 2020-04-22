@@ -56,7 +56,7 @@ export function useInstances<
     return proxy as HooksProxy<Obj>;
   }
 
-  const update = useForceUpdate();
+  const [update] = useForceUpdate();
 
   return construct;
 }

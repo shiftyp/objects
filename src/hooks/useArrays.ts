@@ -2,7 +2,7 @@ import { useForceUpdate } from './useForceUpdate';
 import { HooksProxy } from './types';
 
 export const useArrays = <Obj>(obj: Array<Obj>): (() => HooksProxy<Obj[]>) => {
-  const update = useForceUpdate();
+  const [update] = useForceUpdate();
 
   const construct = () => {
     const proxy = new Proxy<Array<Obj>>([...obj], {

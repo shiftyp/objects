@@ -4,7 +4,7 @@ import { HooksProxy } from './types';
 export const useObjects = <Obj extends Object>(
   obj: Obj
 ): (() => HooksProxy<Obj>) => {
-  const update = useForceUpdate();
+  const [update] = useForceUpdate();
 
   const construct = () => {
     const proxy = new Proxy<Obj>(Object.assign({}, obj), {

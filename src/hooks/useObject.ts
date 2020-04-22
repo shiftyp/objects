@@ -7,20 +7,16 @@ import { HooksProxy } from './types';
 export const useObject = <Obj extends Object>(
   obj: Obj
 ): [HooksProxy<Obj>, () => void] => {
-  const resetCopy = obj;
-  const instance = useRef<Obj>(obj);
-  const update = useForceUpdate();
+  const instance = useRef<Obj>();
+  const [reset, resets] = useForceUpdate();
 
-  const resetInstance = () => {
-    instance.current = resetCopy;
-    update();
-  };
+  useMemo(() => {
+    instance.current = obj;
+  }, [resets]);
 
-  const constructor = Array.isArray(instance.current)
-    ? useArrays(instance.current)
-    : useObjects(instance.current);
+  const constructor = useObjects(instance.current!);
 
-  const proxy = useMemo(() => constructor(), [instance.current]);
+  const proxy = useMemo(() => constructor(), [resets]);
 
-  return [proxy as HooksProxy<Obj>, resetInstance];
+  return [proxy as HooksProxy<Obj>, reset];
 };
