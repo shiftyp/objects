@@ -15,7 +15,6 @@ export class GameLogic {
   selectedImageSearch: (ImageSearch & AsyncIterable<ImageSearch>) | null = null;
 
   constructor(
-    private breeds: HooksProxy<Breeds>,
     private terms: HooksProxy<SearchTerms>,
     private counts: HooksProxy<Record<string, number>>,
     private searches: HooksProxy<HooksProxy<ImageSearch>[]>,
@@ -39,7 +38,25 @@ export class GameLogic {
     this.randomMode = !this.randomMode;
   };
 
+  selectBreed = (breed: string) => {
+    if (this.selectedImageSearch && this.selectedImageSearch.breed === breed) {
+      const index = this.searches.indexOf(this.selectedImageSearch);
+
+      if (index !== -1) {
+        this.searches.splice(index, 1);
+        this.counts[breed] = (this.counts[breed] || 1) - 1;
+
+        if (this.counts[breed] === 0) {
+          delete this.counts[breed];
+        }
+      }
+
+      this.endSelectMode();
+    }
+  };
+
   startSelectMode(search: ImageSearch & AsyncIterable<ImageSearch>) {
+    if (this.selectMode) this.endSelectMode();
     this.selectedImageSearch = search;
     this.selectMode = true;
     window.addEventListener('click', this.endSelectMode);

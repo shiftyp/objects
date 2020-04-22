@@ -31,7 +31,6 @@ const useGame = () => {
 
   const [logic, resetGame] = useInstance(
     GameLogic,
-    breeds,
     terms,
     counts,
     searches,
@@ -41,29 +40,8 @@ const useGame = () => {
   const onImageClick = (search: ImageSearch & AsyncIterable<ImageSearch>) => (
     e: React.MouseEvent
   ) => {
-    if (logic.selectMode) logic.endSelectMode();
     e.stopPropagation();
     logic.startSelectMode(search);
-  };
-
-  const onBreedSelect = (breed: string) => {
-    if (
-      logic.selectedImageSearch &&
-      logic.selectedImageSearch.breed === breed
-    ) {
-      const index = searches.indexOf(logic.selectedImageSearch);
-
-      if (index !== -1) {
-        searches.splice(index, 1);
-        counts[breed] = (counts[breed] || 1) - 1;
-
-        if (counts[breed] === 0) {
-          delete counts[breed];
-        }
-      }
-
-      logic.endSelectMode();
-    }
   };
 
   useEffect(() => {
@@ -75,8 +53,12 @@ const useGame = () => {
     counts,
     searches,
     terms,
-    resetGame,
-    onBreedSelect,
+    reset: () => {
+      resetCounts();
+      resetSearches();
+      resetTerms();
+      resetGame();
+    },
     onImageClick,
     breeds,
   };
@@ -90,8 +72,7 @@ export const Game: React.FC = () => {
     logic,
     breeds,
     onImageClick,
-    onBreedSelect,
-    resetGame,
+    reset,
   } = useGame();
 
   const images: React.ReactNode[] = [];
@@ -119,7 +100,7 @@ export const Game: React.FC = () => {
             <BreedForm terms={terms} addDog={logic.addDog} />
           )}
           <Box mr={10}>
-            <Button onClick={resetGame}>Reset</Button>
+            <Button onClick={reset}>Reset</Button>
           </Box>
           <Flex alignItems="center">
             <Label>
@@ -136,7 +117,7 @@ export const Game: React.FC = () => {
         <BreedIndex
           counts={counts}
           selectMode={logic.selectMode}
-          onSelect={onBreedSelect}
+          onSelect={logic.selectBreed}
         />
         <Masonry>{images}</Masonry>
       </UpdateSection>
