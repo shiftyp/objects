@@ -1,13 +1,17 @@
-import { useReducer } from 'react';
+import { useForceUpdate } from './useForceUpdate';
+import { HooksProxy } from './types';
 
 export function useInstances<
   Obj extends Object,
   ConstructorArgs extends any[] = []
->(Constructor: {
-  new (...args: ConstructorArgs): Obj;
-}): (...args: ConstructorArgs) => Obj & AsyncIterable<Obj> {
+>(
+  Constructor: {
+    new (...args: ConstructorArgs): Obj;
+  },
+  rootInstance?: Obj
+): (...args: ConstructorArgs) => HooksProxy<Obj> {
   function construct(...args: ConstructorArgs) {
-    const instance = {} as Obj;
+    const instance = rootInstance || ({} as Obj);
     const createUpdatePromise = () =>
       new Promise<void>((resolve) => (resolveUpdatePromise = resolve));
 
@@ -19,8 +23,8 @@ export function useInstances<
         instance[prop as keyof Obj] = value;
 
         if (resolveUpdatePromise !== undefined) {
-          updatePromise = createUpdatePromise();
           resolveUpdatePromise();
+          updatePromise = createUpdatePromise();
         }
         if (update !== undefined) {
           update();
@@ -49,13 +53,10 @@ export function useInstances<
 
     Constructor.apply(proxy, args);
 
-    return proxy as Obj & AsyncIterable<Obj>;
+    return proxy as HooksProxy<Obj>;
   }
 
-  const [_, update] = useReducer(
-    (updates) => (updates + 1) % Number.MAX_SAFE_INTEGER,
-    0
-  );
+  const update = useForceUpdate();
 
   return construct;
 }

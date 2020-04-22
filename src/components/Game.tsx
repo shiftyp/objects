@@ -11,82 +11,47 @@ import { BreedIndex } from './BreedIndex';
 import { UpdateSection } from './UpdateSection';
 import { ThemeProvider } from './ThemeProvider';
 
-import { useInstance } from '../hooks/useInstance';
-import { useInstances } from '../hooks/useInstances';
-import { useObject } from '../hooks/useObject';
-
-import { SearchTerms } from '../logic/SearchTerms';
 import { ImageSearch } from '../logic/ImageSearch';
 import { Breeds } from '../logic/Breeds';
+import { GameLogic } from '../logic/GameLogic';
 
-import { shuffle } from '../utils';
+import { useObject } from '../hooks/useObject';
+import { useArray } from '../hooks/useArray';
+import { useInstances } from '../hooks/useInstances';
+import { useInstance } from '../hooks/useInstance';
+import { SearchTerms } from '../logic/SearchTerms';
+import { HooksProxy } from '../hooks/types';
 
 const useGame = () => {
-  const searchId = useRef<number>(0);
-  const [local, resetLocal] = useObject({
-    randomMode: true,
-    selectMode: false,
-    selectedImageSearch: null as
-      | (ImageSearch & AsyncIterable<ImageSearch>)
-      | null,
-  });
-  const [counts, resetCounts] = useObject(
-    {} as Record<string, number>
-  );
   const [breeds] = useInstance(Breeds);
-  const [searches, resetSearches] = useObject(
-    [] as Array<ImageSearch & AsyncIterable<ImageSearch>>
+  const [terms, resetTerms] = useInstance(SearchTerms, breeds);
+  const [counts, resetCounts] = useObject<Record<string, number>>({});
+  const [searches, resetSearches] = useArray<HooksProxy<ImageSearch>>([]);
+  const createSearch = useInstances(ImageSearch);
+
+  const [logic, resetGame] = useInstance(
+    GameLogic,
+    breeds,
+    terms,
+    counts,
+    searches,
+    createSearch
   );
-  const newSearch = useInstances(ImageSearch);
-  const [terms, resetTerms] = useInstance(
-    SearchTerms,
-    breeds
-  );
 
-  const addDog = async () => {
-    const imageSearch = newSearch(
-      terms,
-      searchId.current++
-    );
-
-    counts[imageSearch.breed] =
-      (counts[imageSearch.breed] || 0) + 1;
-
-    searches.push(imageSearch);
-    shuffle(searches);
-
-    await imageSearch.search();
-  };
-
-  const startSelectMode = (
-    search: ImageSearch & AsyncIterable<ImageSearch>
+  const onImageClick = (search: ImageSearch & AsyncIterable<ImageSearch>) => (
+    e: React.MouseEvent
   ) => {
-    local.selectedImageSearch = search;
-    local.selectMode = true;
-    window.addEventListener('click', endSelectMode);
-  };
-
-  const endSelectMode = () => {
-    local.selectMode = false;
-    window.removeEventListener('click', endSelectMode);
-  };
-
-  const onImageClick = (
-    search: ImageSearch & AsyncIterable<ImageSearch>
-  ) => (e: React.MouseEvent) => {
-    if (local.selectMode) endSelectMode();
+    if (logic.selectMode) logic.endSelectMode();
     e.stopPropagation();
-    startSelectMode(search);
+    logic.startSelectMode(search);
   };
 
   const onBreedSelect = (breed: string) => {
     if (
-      local.selectedImageSearch &&
-      local.selectedImageSearch.breed === breed
+      logic.selectedImageSearch &&
+      logic.selectedImageSearch.breed === breed
     ) {
-      const index = searches.indexOf(
-        local.selectedImageSearch
-      );
+      const index = searches.indexOf(logic.selectedImageSearch);
 
       if (index !== -1) {
         searches.splice(index, 1);
@@ -95,23 +60,10 @@ const useGame = () => {
         if (counts[breed] === 0) {
           delete counts[breed];
         }
-      } else {
-        console.error('Oops');
       }
 
-      endSelectMode();
+      logic.endSelectMode();
     }
-  };
-
-  const resetGame = () => {
-    resetLocal();
-    resetCounts();
-    resetSearches();
-    resetTerms();
-  };
-
-  const toggleRandomMode = () => {
-    local.randomMode = !local.randomMode;
   };
 
   useEffect(() => {
@@ -119,34 +71,26 @@ const useGame = () => {
   }, [breeds]);
 
   return {
-    searches: searches as ReadonlyArray<
-      ImageSearch & AsyncIterable<ImageSearch>
-    >,
-    counts: counts as Readonly<Record<string, number>>,
+    logic,
+    counts,
+    searches,
+    terms,
     resetGame,
-    toggleRandomMode,
     onBreedSelect,
     onImageClick,
-    addDog,
-    terms,
     breeds,
-    ...local,
   };
 };
 
 export const Game: React.FC = () => {
   const {
-    counts,
-    breeds,
     searches,
     terms,
-    selectMode,
-    selectedImageSearch,
-    randomMode,
+    counts,
+    logic,
+    breeds,
     onImageClick,
     onBreedSelect,
-    toggleRandomMode,
-    addDog,
     resetGame,
   } = useGame();
 
@@ -160,9 +104,7 @@ export const Game: React.FC = () => {
         key={search.id}
         imageSearch={search}
         onClick={onImageClick(search)}
-        fadeOut={
-          selectMode && selectedImageSearch !== search
-        }
+        fadeOut={logic.selectMode && logic.selectedImageSearch !== search}
       />
     );
   }
@@ -171,10 +113,10 @@ export const Game: React.FC = () => {
     <ThemeProvider>
       <UpdateSection updates={[breeds, ...searches]}>
         <Flex>
-          {randomMode ? (
-            <RandomForm terms={terms} addDog={addDog} />
+          {logic.randomMode ? (
+            <RandomForm terms={terms} addDog={logic.addDog} />
           ) : (
-            <BreedForm terms={terms} addDog={addDog} />
+            <BreedForm terms={terms} addDog={logic.addDog} />
           )}
           <Box mr={10}>
             <Button onClick={resetGame}>Reset</Button>
@@ -182,20 +124,18 @@ export const Game: React.FC = () => {
           <Flex alignItems="center">
             <Label>
               <Checkbox
-                checked={randomMode}
-                onChange={toggleRandomMode}
+                checked={logic.randomMode}
+                onChange={logic.toggleRandomMode}
               />
               <Flex alignItems="center">
-                <Text fontFamily="sans-serif">
-                  Random Mode
-                </Text>
+                <Text fontFamily="sans-serif">Random Mode</Text>
               </Flex>
             </Label>
           </Flex>
         </Flex>
         <BreedIndex
           counts={counts}
-          selectMode={selectMode}
+          selectMode={logic.selectMode}
           onSelect={onBreedSelect}
         />
         <Masonry>{images}</Masonry>
