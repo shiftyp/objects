@@ -1,16 +1,26 @@
-import { useArray } from './useArray';
-import { useBasicObject } from './useBasicObject';
+import { useRef, useMemo } from 'react';
+import { useForceUpdate } from './useForceUpdate';
+import { useObjects } from './useObjects';
+import { useArrays } from './useArrays';
+import { HooksProxy } from './types';
 
-export function useObject<Obj extends Record<string, any>>(
+export const useObject = <Obj extends Object>(
   obj: Obj
-): [AsyncIterable<Obj> & Obj, () => void];
-export function useObject<Obj extends Array<any>>(
-  Obj: Obj
-): [AsyncIterable<Obj> & Obj, () => void];
+): [HooksProxy<Obj>, () => void] => {
+  const resetCopy = obj;
+  const instance = useRef<Obj>(obj);
+  const update = useForceUpdate();
 
-export function useObject<Obj extends Object | Array<any>>(obj: Obj) {
-  if (Array.isArray(obj)) {
-    return useArray(obj);
-  }
-  return useBasicObject<Obj>(obj as Obj);
-}
+  const resetInstance = () => {
+    instance.current = resetCopy;
+    update();
+  };
+
+  const constructor = Array.isArray(instance.current)
+    ? useArrays(instance.current)
+    : useObjects(instance.current);
+
+  const proxy = useMemo(() => constructor(), [instance.current]);
+
+  return [proxy as HooksProxy<Obj>, resetInstance];
+};
