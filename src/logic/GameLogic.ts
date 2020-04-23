@@ -2,7 +2,6 @@ import { useRef } from 'react';
 
 import { ImageSearch } from './ImageSearch';
 import { SearchTerms } from './SearchTerms';
-import { Breeds } from './Breeds';
 
 import { shuffle } from '../utils';
 import { HooksProxy } from '../hooks/types';
