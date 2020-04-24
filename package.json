@@ -8,5 +8,9 @@
   "private": true,
   "workspaces": [
     "./packages/*"
-  ]
+  ],
+  "scripts': {
+    "start:notebook": "yarn workspace notebook start",
+    "start:dog": "yarn workspace name-that-dog start",
+    "start": "yarn start:notebook"
 }
