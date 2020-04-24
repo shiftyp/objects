@@ -1,3 +1,7 @@
 {
-  "template": "parcel"
+  "template": "react",
+  "container": {
+    "port": 1234,
+    "startScript": "start:notebook"
+  }
 }
