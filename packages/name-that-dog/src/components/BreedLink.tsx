@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 import { Text, Link, Button, Card } from 'rebass';
 
-import { useInstance } from '../hooks/useInstance';
+import { useInstance } from 'object-hooks';
 
 import { ArticleFetch } from '../logic/ArticleFetch';
 

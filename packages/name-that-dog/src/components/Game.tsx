@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 
 import Masonry from 'react-masonry-component';
 import { Button, Flex, Box, Text } from 'rebass';
@@ -11,58 +11,7 @@ import { BreedIndex } from './BreedIndex';
 import { UpdateSection } from './UpdateSection';
 import { ThemeProvider } from './ThemeProvider';
 
-import { ImageSearch } from '../logic/ImageSearch';
-import { Breeds } from '../logic/Breeds';
-import { GameLogic } from '../logic/GameLogic';
-
-import { useObject } from '../hooks/useObject';
-import { useArray } from '../hooks/useArray';
-import { useInstances } from '../hooks/useInstances';
-import { useInstance } from '../hooks/useInstance';
-import { SearchTerms } from '../logic/SearchTerms';
-import { HooksProxy } from '../hooks/types';
-
-const useGame = () => {
-  const [breeds] = useInstance(Breeds);
-  const [terms, resetTerms] = useInstance(SearchTerms, breeds);
-  const [counts, resetCounts] = useObject<Record<string, number>>({});
-  const [searches, resetSearches] = useArray<HooksProxy<ImageSearch>>([]);
-  const createSearch = useInstances(ImageSearch);
-
-  const [logic, resetGame] = useInstance(
-    GameLogic,
-    terms,
-    counts,
-    searches,
-    createSearch
-  );
-
-  const onImageClick = (search: ImageSearch & AsyncIterable<ImageSearch>) => (
-    e: React.MouseEvent
-  ) => {
-    e.stopPropagation();
-    logic.startSelectMode(search);
-  };
-
-  useEffect(() => {
-    breeds.load();
-  }, [breeds]);
-
-  return {
-    logic,
-    counts,
-    searches,
-    terms,
-    reset: () => {
-      resetCounts();
-      resetSearches();
-      resetTerms();
-      resetGame();
-    },
-    onImageClick,
-    breeds,
-  };
-};
+import { useGameLogic } from '../hooks/useGameLogic';
 
 export const Game: React.FC = () => {
   const {
@@ -73,7 +22,7 @@ export const Game: React.FC = () => {
     breeds,
     onImageClick,
     reset,
-  } = useGame();
+  } = useGameLogic();
 
   const images: React.ReactNode[] = [];
 

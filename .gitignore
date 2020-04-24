@@ -1,4 +1,4 @@
-.DS_STORE
-dist
 node_modules
-.cache
+lib
+.DS_Store
+yarn-error.log

@@ -2,7 +2,7 @@ import React, { FormEvent, ChangeEvent } from 'react';
 import { Input } from '@rebass/forms';
 import { Button, Box, Flex } from 'rebass';
 
-import { useObject } from '../hooks/useObject';
+import { useObject } from 'object-hooks';
 
 import { SearchTerms } from '../logic/SearchTerms';
 
