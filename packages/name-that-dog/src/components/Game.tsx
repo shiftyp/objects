@@ -40,36 +40,34 @@ export const Game: React.FC = () => {
   }
 
   return (
-    <ThemeProvider>
-      <UpdateSection updates={[breeds, ...searches]}>
-        <Flex>
-          {logic.randomMode ? (
-            <RandomForm terms={terms} addDog={logic.addDog} />
-          ) : (
-            <BreedForm terms={terms} addDog={logic.addDog} />
-          )}
-          <Box mr={10}>
-            <Button onClick={reset}>Reset</Button>
-          </Box>
-          <Flex alignItems="center">
-            <Label>
-              <Checkbox
-                checked={logic.randomMode}
-                onChange={logic.toggleRandomMode}
-              />
-              <Flex alignItems="center">
-                <Text fontFamily="sans-serif">Random Mode</Text>
-              </Flex>
-            </Label>
-          </Flex>
+    <UpdateSection updates={[breeds, ...searches]}>
+      <Flex>
+        {logic.randomMode ? (
+          <RandomForm terms={terms} addDog={logic.addDog} />
+        ) : (
+          <BreedForm terms={terms} addDog={logic.addDog} />
+        )}
+        <Box mr={10}>
+          <Button onClick={reset}>Reset</Button>
+        </Box>
+        <Flex alignItems="center">
+          <Label>
+            <Checkbox
+              checked={logic.randomMode}
+              onChange={logic.toggleRandomMode}
+            />
+            <Flex alignItems="center">
+              <Text fontFamily="sans-serif">Random Mode</Text>
+            </Flex>
+          </Label>
         </Flex>
-        <BreedIndex
-          counts={counts}
-          selectMode={logic.selectMode}
-          onSelect={logic.selectBreed}
-        />
-        <Masonry>{images}</Masonry>
-      </UpdateSection>
-    </ThemeProvider>
+      </Flex>
+      <BreedIndex
+        counts={counts}
+        selectMode={logic.selectMode}
+        onSelect={logic.selectBreed}
+      />
+      <Masonry>{images}</Masonry>
+    </UpdateSection>
   );
 };
