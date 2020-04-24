@@ -1,20 +1,27 @@
 # Object Hooks Test
 
-The repository is called Object Hooks Test, which belies its true [purpose](#purpose), but the compiled application is a [matching game for dog breeds](https://object-hooks-test.netlify.app/)!
+The repository is called Object Hooks, which belies its true [purpose](#purpose), but the compiled application from this repo are a matching game for dogs breeds, and an offline notebook (coming soon)!
+
+## [🐕🐩.to](https;//🐕🐩.to)
 
 ![Screen capture of application](./assets/screencap.gif)
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/357c124b-d428-4d01-a7b2-c46ebe5a1815/deploy-status)](https://app.netlify.com/sites/object-hooks-test/deploys)
 
+## [📔.to](https;//📔.to)
+
+Coming soon!
+
 # Purpose
 
-The purpose of this repository is to test a group of novel [React Hooks](https://reactjs.org/docs/hooks-intro.html), all of which revolve around mutable state. These hooks are:
+The purpose of this repository is to devlop and test a group of novel [React Hooks](https://reactjs.org/docs/hooks-intro.html), all of which revolve around mutable state. These hooks are:
 
 1. [useObject](#useobject)
-2. [useInstance](#useinstance)
-3. [useInstances](#useinstances)
+1. [useArray](#usearray)
+1. [useInstance](#useinstance)
+1. [useInstances](#useinstances)
 
-The examples in this readme are simplified, but look in the source (you can start with [Game.tsx](./src/components/Game.tsx)!) for more realistic usages. Lets get started!
+The examples in this readme are simplified, but look in the source (you can start with the dog matching app's [Game.tsx](./packages/name-that-dog/src/components/Game.tsx)!) for more realistic usages. Lets get started!
 
 # useObject
 
@@ -65,8 +72,7 @@ export const Counter: React.FC = () => {
     count: 1,
   });
 
-  const logCount = (count: number) =>
-    console.log(`Count is: ${count}`);
+  const logCount = (count: number) => console.log(`Count is: ${count}`);
 
   const watchCount = async () => {
     logCount(local.count);
@@ -103,7 +109,9 @@ export const Counter: React.FC = () => {
 
 ![sceen capture of example](./assets/objecthooks-screencap2.gif)
 
-You may be thinking: "What about arrays?" Those work too, so you can mutate and observe them as well!
+# useArray
+
+You may be thinking: "What about arrays?" Those work too, so you can mutate and observe them as well! See the source for usage!
 
 # useInstance
 
@@ -164,10 +172,7 @@ class CounterLogic {
 }
 
 class CounterLogger {
-  constructor(
-    private logic: CounterLogic &
-      AsyncIterable<CounterLogic>
-  ) {}
+  constructor(private logic: CounterLogic & AsyncIterable<CounterLogic>) {}
 
   log(count: number) {
     console.log(`Count is: ${count}`);
@@ -184,10 +189,7 @@ class CounterLogger {
 
 export const Counter: React.FC = () => {
   const [counter, resetCounter] = useInstance(CounterLogic);
-  const [logger, resetLogger] = useInstance(
-    CounterLogger,
-    counter
-  );
+  const [logger, resetLogger] = useInstance(CounterLogger, counter);
 
   useEffect(() => {
     logger.watch();
