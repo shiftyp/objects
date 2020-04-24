@@ -1,5 +1,5 @@
 {
-  "template": "react",
+  "template": "vanilla",
   "container": {
     "port": 1234,
     "startScript": "start:notebook"
