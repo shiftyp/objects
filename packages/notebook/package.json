@@ -22,8 +22,6 @@
     "@types/react-dom": "16.9.5",
     "parcel-bundler": "1.12.4",
     "sass": "1.26.3",
-    "serverless": "^1.68.0",
-    "serverless-plugin-typescript": "^1.1.9",
     "typescript": "^3.8.3"
   },
   "browserslist": [
