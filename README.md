@@ -14,7 +14,7 @@ Coming soon!
 
 # Purpose
 
-The purpose of this repository is to devlop and test a group of novel [React Hooks](https://reactjs.org/docs/hooks-intro.html), all of which revolve around mutable state. These hooks are:
+The purpose of this repository is to develop and test a group of novel [React Hooks](https://reactjs.org/docs/hooks-intro.html), all of which revolve around mutable state. These hooks are:
 
 1. [useObject](#useobject)
 1. [useArray](#usearray)
