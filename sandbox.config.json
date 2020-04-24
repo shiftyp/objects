@@ -1,5 +1,5 @@
 {
-  "template": "vanilla",
+  "template": "parcel",
   "container": {
     "port": 1234,
     "startScript": "start:notebook"
