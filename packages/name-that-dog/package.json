@@ -1,6 +1,6 @@
 {
   "name": "name-that-dog",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "A dog matching game built with object hooks",
   "main": "src/index.tsx",
   "dependencies": {
@@ -8,7 +8,7 @@
     "@rebass/preset": "^4.0.5",
     "@types/rebass": "^4.0.5",
     "emotion-theming": "^10.0.27",
-    "object-hooks": "^0.0.1",
+    "object-hooks": "^0.0.2",
     "react": "^16.13.1",
     "react-dom": "16.13.1",
     "react-masonry-component": "6.2.1",
