@@ -43,12 +43,12 @@ export const useArrays = <Obj>(obj: Array<Obj>): (() => HooksProxy<Obj[]>) => {
     let resolveUpdatePromise: (() => void) | null = null;
     let updatePromise: Promise<void> | null = null;
 
-    const updateGenerator = (async function* (): AsyncGenerator<Array<Obj>> {
+    const updateGenerator = async function* (): AsyncGenerator<Array<Obj>> {
       while (true) {
         await updatePromise;
         yield proxy;
       }
-    })();
+    };
 
     return proxy as HooksProxy<Obj[]>;
   };

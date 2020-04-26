@@ -19,7 +19,7 @@ export const useObjects = <Obj extends Object>(
       },
       get: (instance, prop) => {
         if (prop === Symbol.asyncIterator) {
-          return () => updateGenerator;
+          return () => updateGenerator();
         }
         return instance[prop as keyof Obj];
       },
@@ -35,12 +35,12 @@ export const useObjects = <Obj extends Object>(
     let resolveUpdatePromise: (() => void) | null = null;
     let updatePromise: Promise<void> | null = null;
 
-    const updateGenerator = (async function* (): AsyncGenerator<Obj> {
+    const updateGenerator = async function* (): AsyncGenerator<Obj> {
       while (true) {
         await updatePromise;
         yield proxy;
       }
-    })();
+    };
 
     return proxy as HooksProxy<Obj>;
   };

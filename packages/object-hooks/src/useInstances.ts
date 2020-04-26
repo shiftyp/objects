@@ -33,7 +33,7 @@ export function useInstances<
       },
       get: (_, prop) => {
         if (prop === Symbol.asyncIterator) {
-          return () => updateGenerator;
+          return () => updateGenerator();
         }
         return instance[prop as keyof Obj];
       },
@@ -42,12 +42,12 @@ export function useInstances<
       },
     });
 
-    const updateGenerator = (async function* (): AsyncGenerator<Obj> {
+    const updateGenerator = async function* (): AsyncGenerator<Obj> {
       while (true) {
         await updatePromise;
         yield proxy;
       }
-    })();
+    };
 
     Object.setPrototypeOf(instance, Constructor.prototype);
 
