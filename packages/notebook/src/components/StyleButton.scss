@@ -1,0 +1,12 @@
+.style-button {
+  background-color: transparent;
+  padding: 10px 16px;
+  border-radius: 5px;
+  text-transform: uppercase;
+
+  &.enabled {
+    font-weight: bold;
+    background-color: black;
+    color: white;
+  }
+}

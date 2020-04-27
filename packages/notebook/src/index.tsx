@@ -1,13 +1,7 @@
 import * as React from 'react';
 import { render } from 'react-dom';
 
-import { Notebook } from './components/Notebook';
-import { ThemeProvider } from './components/ThemeProvider';
+import { App } from './components/App';
 
 const rootElement = document.getElementById('root');
-render(
-  <ThemeProvider>
-    <Notebook />
-  </ThemeProvider>,
-  rootElement
-);
+render(<App />, rootElement);
