@@ -24,20 +24,27 @@ export class EditorLogic {
   focus() {
     this.editorState = EditorState.forceSelection(
       this.editorState,
-      (this.editorState.getSelection() as any).merge({
+      ((this.editorState.getSelection() as any).merge({
         hasFocus: true,
       }) as SelectionState
     );
   }
 
   updateFromCommand(command: string) {
-    const newEditorState =
-      RichUtils.handleKeyCommand(this.editorState, command) || this.editorState;
-    if (newEditorState !== this.editorState) {
-      this.editorState = newEditorState;
-
-      if (!this.editorState.getSelection().getHasFocus()) {
+    const newEditorState = RichUtils.handleKeyCommand(
+      this.editorState,
+      command
+    );
+    if (newEditorState && newEditorState !== this.editorState) {
+      const selection = this.editorState.getSelection();
+      if (!selection.getHasFocus()) {
         this.focus();
+        this.editorState = RichUtils.handleKeyCommand(
+          this.editorState,
+          command
+        );
+      } else {
+        this.editorState = newEditorState;
       }
     }
   }
