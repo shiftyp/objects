@@ -31,9 +31,15 @@ export class EditorLogic {
   }
 
   updateFromCommand(command: string) {
-    this.focus();
-    this.editorState =
+    const newEditorState =
       RichUtils.handleKeyCommand(this.editorState, command) || this.editorState;
+    if (newEditorState !== this.editorState) {
+      this.editorState = newEditorState;
+
+      if (!this.editorState.getSelection().getHasFocus()) {
+        this.focus();
+      }
+    }
   }
 
   async saveOnChange() {
