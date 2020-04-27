@@ -15,7 +15,9 @@ body {
 .app-header {
   display: flex;
   flex-direction: row;
-  align-items: stretch;
+  border-bottom: 1px dotted #ccc;
+  padding-bottom: 10px;
+  box-sizing: border-box;
 
   & > button {
     margin-left: 10px;
