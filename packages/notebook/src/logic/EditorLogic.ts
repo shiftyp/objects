@@ -21,17 +21,19 @@ export class EditorLogic {
     this.editorState = state;
   };
 
+  focus() {
+    this.editorState = EditorState.forceSelection(
+      this.editorState,
+      (this.editorState.getSelection() as any).merge({
+        hasFocus: true,
+      }) as SelectionState
+    );
+  }
+
   updateFromCommand(command: string) {
+    this.focus();
     this.editorState =
-      RichUtils.handleKeyCommand(
-        EditorState.forceSelection(
-          this.editorState,
-          (this.editorState.getSelection() as any).merge({
-            hasFocus: true,
-          }) as SelectionState
-        ),
-        command
-      ) || this.editorState;
+      RichUtils.handleKeyCommand(this.editorState, command) || this.editorState;
   }
 
   async saveOnChange() {

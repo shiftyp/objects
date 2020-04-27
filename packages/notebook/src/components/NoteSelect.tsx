@@ -40,6 +40,7 @@ export const NoteSelect: React.FC<{
       }}
       onCreateOption={async (name) => {
         await editor.newNote(name);
+        editor.focus();
         selector.fetch();
       }}
       options={options}
