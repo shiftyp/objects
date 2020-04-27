@@ -1,0 +1,12 @@
+.note-editor-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  padding: 14px;
+  margin: 14px 0 0 0;
+  & * {
+    z-index: 0;
+  }
+  font-size: 1.1em;
+  border: 1px solid #eee;
+}

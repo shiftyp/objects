@@ -1,0 +1,10 @@
+.note-select-option {
+  display: flex;
+  justify-content: space-between;
+  padding: 14px 10px;
+  border-bottom: 1px dotted #ccc;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
