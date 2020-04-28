@@ -14,7 +14,7 @@ export const useArrays = <Obj>(obj: Array<Obj>): (() => HooksProxy<Obj[]>) => {
       },
       get: (instance, prop) => {
         if (prop === Symbol.asyncIterator) {
-          return () => updateGenerator;
+          return () => updateGenerator();
         }
         if (
           typeof prop === 'string' &&
