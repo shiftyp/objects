@@ -1,6 +1,6 @@
 # Object Hooks
 
-The repository is called Object Hooks, which belies its true [purpose](#purpose), but the compiled applications from this repo are a matching game for dogs breeds, and an offline notebook (coming soon)!
+The repository is called Object Hooks, which belies its true [purpose](#purpose), but the compiled applications from this repo are a matching game for dogs breeds, and an IndexDB powered notebook!
 
 ## [🐕🐩.to](https://🐕🐩.to)
 
