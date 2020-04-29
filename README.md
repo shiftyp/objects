@@ -6,8 +6,6 @@ The repository is called Object Hooks, which belies its true [purpose](#purpose)
 
 ![Screen capture of application](./assets/screencap.gif)
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/357c124b-d428-4d01-a7b2-c46ebe5a1815/deploy-status)](https://app.netlify.com/sites/object-hooks-test/deploys)
-
 ## [📔.to](https://📔.to)
 
 ![Screen capture of application](./assets/screencap2.gif)
