@@ -1,6 +1,6 @@
 {
   "name": "object-hooks",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "A set of react hooks built around objects and mutability",
   "main": "lib/index.js",
   "repository": "https://github.com/shiftyp/object-hooks-test",

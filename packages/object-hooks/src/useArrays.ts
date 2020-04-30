@@ -26,6 +26,8 @@ export const useArrays = <Obj>(obj: Array<Obj>): (() => HooksProxy<Obj[]>) => {
         ) {
           return (...args: any[]) => {
             const ret = instance[prop](...args);
+            resolveUpdatePromise && resolveUpdatePromise();
+            updatePromise = createUpdatePromise();
             update();
             return ret;
           };
