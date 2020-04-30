@@ -5,10 +5,14 @@ export const useArrays = <Obj>(obj: Array<Obj>): (() => HooksProxy<Obj[]>) => {
   const [update] = useForceUpdate();
 
   const construct = () => {
+    const createUpdatePromise = () =>
+      new Promise<void>((resolve) => (resolveUpdatePromise = resolve));
+
     const proxy = new Proxy<Array<Obj>>([...obj], {
       set: (instance, prop, value) => {
         instance[prop as any] = value;
         resolveUpdatePromise && resolveUpdatePromise();
+        updatePromise = createUpdatePromise();
         update();
         return true;
       },
@@ -41,7 +45,7 @@ export const useArrays = <Obj>(obj: Array<Obj>): (() => HooksProxy<Obj[]>) => {
     });
 
     let resolveUpdatePromise: (() => void) | null = null;
-    let updatePromise: Promise<void> | null = null;
+    let updatePromise: Promise<void> = createUpdatePromise();
 
     const updateGenerator = async function* (): AsyncGenerator<Array<Obj>> {
       while (true) {

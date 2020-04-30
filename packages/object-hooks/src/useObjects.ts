@@ -7,13 +7,14 @@ export const useObjects = <Obj extends Object>(
   const [update] = useForceUpdate();
 
   const construct = () => {
+    const createUpdatePromise = () =>
+      new Promise<void>((resolve) => (resolveUpdatePromise = resolve));
+
     const proxy = new Proxy<Obj>(Object.assign({}, obj), {
       set: (instance, prop, value) => {
         instance[prop as keyof Obj] = value;
-        updatePromise = new Promise(
-          (resolve) => (resolveUpdatePromise = resolve)
-        );
         resolveUpdatePromise && resolveUpdatePromise();
+        updatePromise = createUpdatePromise();
         update();
         return true;
       },
@@ -33,7 +34,7 @@ export const useObjects = <Obj extends Object>(
     });
 
     let resolveUpdatePromise: (() => void) | null = null;
-    let updatePromise: Promise<void> | null = null;
+    let updatePromise: Promise<void> = createUpdatePromise();
 
     const updateGenerator = async function* (): AsyncGenerator<Obj> {
       while (true) {
