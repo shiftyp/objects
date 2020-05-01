@@ -12,7 +12,7 @@
     "@types/react-select": "^3.0.11",
     "classnames": "^2.2.6",
     "draft-js": "^0.11.5",
-    "object-hooks": "^0.0.4",
+    "object-hooks": "^0.0.8",
     "react": "^16.13.1",
     "react-dom": "16.13.1",
     "react-select": "^3.1.0"

@@ -1,5 +1,10 @@
 import { useForceUpdate } from './useForceUpdate';
 import { HooksProxy } from './types';
+import {
+  unstable_trace as trace,
+  unstable_wrap as wrap,
+} from 'scheduler/tracing-profiling';
+import { useRef } from 'react';
 
 export function useInstances<
   Obj extends Object,
@@ -12,6 +17,8 @@ export function useInstances<
 ): (...args: ConstructorArgs) => HooksProxy<Obj> {
   function construct(...args: ConstructorArgs) {
     const instance = rootInstance || ({} as Obj);
+    const methodMap: WeakMap<Function, Function> = new WeakMap();
+
     const createUpdatePromise = () =>
       new Promise<void>((resolve) => (resolveUpdatePromise = resolve));
 
@@ -27,7 +34,11 @@ export function useInstances<
           updatePromise = createUpdatePromise();
         }
         if (update !== undefined) {
-          update();
+          trace(
+            `${Constructor.name}.${String(prop)} = ${JSON.stringify(value)}`,
+            performance.now(),
+            update
+          );
         }
         return true;
       },
@@ -35,7 +46,27 @@ export function useInstances<
         if (prop === Symbol.asyncIterator) {
           return () => updateGenerator();
         }
-        return instance[prop as keyof Obj];
+
+        const value = instance[prop as keyof Obj];
+
+        if (typeof value === 'function') {
+          if (!methodMap.get(value)) {
+            methodMap.set(value, (...args: any[]) => {
+              return trace(
+                `${Constructor.name}.${String(prop)}(${args
+                  .map((arg) => JSON.stringify(arg))
+                  .join(', ')})`,
+                performance.now(),
+                () => {
+                  return value.apply(proxy, args);
+                }
+              );
+            });
+          }
+          return methodMap.get(value);
+        }
+
+        return value;
       },
       ownKeys: () => {
         return Reflect.ownKeys(instance);

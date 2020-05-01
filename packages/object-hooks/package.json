@@ -1,6 +1,6 @@
 {
   "name": "object-hooks",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "A set of react hooks built around objects and mutability",
   "main": "lib/index.js",
   "repository": "https://github.com/shiftyp/object-hooks-test",
@@ -14,7 +14,8 @@
     "react": "^16.13.1"
   },
   "devDependencies": {
-    "typescript": "^3.8.3",
-    "react": "^16.13.1"
+    "@types/scheduler": "^0.16.1",
+    "react": "^16.13.1",
+    "typescript": "^3.8.3"
   }
 }

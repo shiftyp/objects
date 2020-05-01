@@ -6,6 +6,11 @@ import { useObject } from 'object-hooks';
 
 import { SearchTerms } from '../logic/SearchTerms';
 
+import {
+  unstable_trace as trace,
+  unstable_wrap as wrap,
+} from 'scheduler/tracing-profiling';
+
 export const RandomForm: React.FC<{
   terms: SearchTerms;
   addDog: () => void;
@@ -20,10 +25,14 @@ export const RandomForm: React.FC<{
 
   const onFormSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    for (var i = 0; i < local.numDogs; i++) {
-      terms.randomize();
-      await addDog();
-    }
+    return trace('RandomForm submit', performance.now(), async () => {
+      const add = wrap(addDog);
+
+      for (var i = 0; i < local.numDogs; i++) {
+        terms.randomize();
+        await add();
+      }
+    });
   };
 
   return (
