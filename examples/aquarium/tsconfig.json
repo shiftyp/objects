@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "rootDir": "./src",
+    "outDir": "lib",
+    "jsx": "react",
+    "target": "ES5",
+    "lib": ["ESNext", "DOM"],
+    "experimentalDecorators": true
+  }
+}

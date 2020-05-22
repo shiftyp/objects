@@ -1,0 +1,21 @@
+{
+  "name": "@objects/hooks",
+  "version": "0.1.0",
+  "description": "A set of react hooks built around objects and mutability",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "repository": "https://github.com/shiftyp/objects.git",
+  "author": "Ryan Lynch <lynch.r.j@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "prepublish": "npm run build"
+  },
+  "devDependencies": {
+    "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "symbol-observable": "^1.2.0",
+    "@objects/layers": "0.1.0"
+  }
+}

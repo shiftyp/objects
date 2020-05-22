@@ -1,0 +1,23 @@
+{
+  "name": "@objects/operators",
+  "version": "0.1.0",
+  "description": "A set of utilities around objects and mutability",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "repository": "https://github.com/shiftyp/objects.git",
+  "author": "Ryan Lynch <lynch.r.j@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "prepublish": "npm run build"
+  },
+  "peerDependencies": {
+    "rxjs": "^6.5.5"
+  },
+  "devDependencies": {
+    "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "@objects/types": "^0.1.0"
+  }
+}

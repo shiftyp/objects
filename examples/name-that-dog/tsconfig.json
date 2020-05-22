@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "outDir": "lib",
+    "jsx": "react",
+    "lib": ["es6", "ESNext", "DOM"],
+    "target": "es5",
+    "strict": true
+  }
+}

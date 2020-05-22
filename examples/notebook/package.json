@@ -1,0 +1,29 @@
+{
+  "name": "notebook",
+  "version": "0.0.1",
+  "description": "Your private notebook",
+  "main": "src/index.tsx",
+  "scripts": {
+    "start": "parcel ./src/index.html",
+    "build": "parcel build ./src/index.html"
+  },
+  "dependencies": {
+    "@types/draft-js": "^0.10.40",
+    "@types/react-select": "^3.0.11",
+    "classnames": "^2.2.6",
+    "draft-js": "^0.11.5",
+    "@objects/hooks": "^0.1.0",
+    "react": "^16.13.1",
+    "react-dom": "16.13.1",
+    "react-select": "^3.1.0",
+    "rxjs": "^6.5.5"
+  },
+  "devDependencies": {
+    "@types/react": "16.9.19",
+    "@types/react-dom": "16.9.5",
+    "parcel-bundler": "1.12.4",
+    "sass": "1.26.3",
+    "typescript": "^3.8.3"
+  },
+  "private": true
+}

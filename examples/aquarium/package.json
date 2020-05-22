@@ -1,0 +1,31 @@
+{
+  "name": "aquarium",
+  "version": "0.0.1",
+  "description": "Your private notebook",
+  "main": "src/index.tsx",
+  "scripts": {
+    "start": "parcel ./src/index.html",
+    "build": "parcel build ./src/index.html"
+  },
+  "dependencies": {
+    "@types/draft-js": "^0.10.40",
+    "@types/react-select": "^3.0.11",
+    "classnames": "^2.2.6",
+    "@objects/hooks": "^0.1.0",
+    "@objects/operators": "^0.1.0",
+    "preact": "10.4.1",
+    "rxjs": "^6.5.5"
+  },
+  "devDependencies": {
+    "@types/react": "16.9.19",
+    "@types/react-dom": "16.9.5",
+    "parcel-bundler": "1.12.4",
+    "sass": "1.26.3",
+    "typescript": "^3.9.0"
+  },
+  "alias": {
+    "react": "preact/compat",
+    "react-dom": "preact/compat"
+  },
+  "private": true
+}

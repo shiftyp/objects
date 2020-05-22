@@ -2,12 +2,13 @@
   "name": "object-hooks-test",
   "version": "0.0.1",
   "main": "index.js",
-  "repository": "git@github.com:shiftyp/useclass-test.git",
+  "repository": "git@github.com:shiftyp/object-hooks.git",
   "author": "Ryan Lynch <lynch.r.j@gmail.com>",
   "license": "MIT",
   "private": true,
   "workspaces": [
-    "./packages/*"
+    "./packages/*",
+    "./examples/*"
   ],
   "scripts": {
     "start:notebook": "yarn workspace notebook start",

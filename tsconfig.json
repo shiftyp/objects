@@ -1,6 +1,12 @@
 {
   "references": [
-    { "path": "./packages/object-hooks" },
-    { "path": "./packages/name-that-dog" }
-  ]
+    { "path": "./packages/types" },
+    { "path": "./packages/layers" },
+    { "path": "./packages/hooks" },
+    { "path": "./packages/operators" }
+  ],
+  "compilerOptions": { "composite": true },
+  "files": [],
+  "include": [],
+  "exclude": ["**/node_modules"]
 }

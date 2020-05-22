@@ -1,0 +1,16 @@
+{
+  "include": ["./src/*"],
+  "compilerOptions": {
+    "rootDir": "./src",
+    "strict": true,
+    "composite": true,
+    "lib": ["DOM", "esnext", "ES6"],
+    "target": "es5",
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "declarationMap": true,
+    "outDir": "lib"
+  },
+  "exclude": ["**/node_modules"]
+}

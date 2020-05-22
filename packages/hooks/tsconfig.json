@@ -1,0 +1,25 @@
+{
+  "include": ["./src/*"],
+  "compilerOptions": {
+    "rootDir": "./src",
+    "strict": true,
+    "composite": true,
+    "esModuleInterop": true,
+    "lib": ["dom", "esnext", "ES6"],
+    "jsx": "react",
+    "target": "es5",
+    "allowJs": true,
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noImplicitAny": false,
+    "declaration": true,
+    "declarationMap": true,
+    "outDir": "lib"
+  },
+  "references": [{ "path": "../types" }, { "path": "../layers" }]
+}

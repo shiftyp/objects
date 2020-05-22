@@ -1,0 +1,17 @@
+{
+  "include": ["./src/*"],
+  "compilerOptions": {
+    "rootDir": "./src",
+    "strict": true,
+    "composite": true,
+    "esModuleInterop": true,
+    "lib": ["dom", "esnext", "ES6"],
+    "target": "es5",
+    "skipLibCheck": true,
+    "noImplicitAny": true,
+    "declaration": true,
+    "declarationMap": true,
+    "outDir": "lib"
+  },
+  "references": [{ "path": "../types" }]
+}
