@@ -47,8 +47,8 @@ export class Fish extends StatefulBase<Fish> {
 
     return {
       rho,
-      phi: phi,
-      theta: theta + Math.PI,
+      phi: phi + Math.PI + (Math.random() - 1) * (Math.PI / 10),
+      theta: theta + Math.PI + (Math.random() - 1) * (Math.PI / 10),
     };
   };
 

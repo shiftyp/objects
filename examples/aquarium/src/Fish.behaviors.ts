@@ -5,6 +5,9 @@ import {
   animationFrameScheduler,
   Subscription,
   EMPTY,
+  merge,
+  interval,
+  race,
 } from 'rxjs';
 import {
   map,
@@ -41,10 +44,7 @@ export const swimming = (fish: Fish) => {
     .pipe(
       startWith({}),
       switchMap(() =>
-        from(
-          fish.swimGenerator(maxPosition()),
-          animationFrameScheduler
-        )
+        from(fish.swimGenerator(maxPosition()), animationFrameScheduler)
       )
     )
     .pipe(
@@ -59,15 +59,26 @@ export const avoiding = (fish: Fish) => {
 
   return fromEvent(window, 'mousedown')
     .pipe(
-      filter(
-        (event) =>
-          (event.target as HTMLElement).tagName.toLowerCase() !==
-          'button'
-      ),
+      filter((event) => {
+        const element = event.target as HTMLElement;
+        return (
+          element.tagName.toLowerCase() !== 'button' &&
+          !(element?.parentElement.tagName === 'button')
+        );
+      }),
       switchMap((startEvent) =>
         fromEvent(window, 'mousemove').pipe(
           startWith(startEvent),
-          takeUntil(fromEvent(window, 'mouseup'))
+          switchMap((event) =>
+            interval(100).pipe(
+              map(() => event),
+              startWith(event)
+            )
+          ),
+          throttleTime(100),
+          takeUntil(
+            race(fromEvent(window, 'mouseup'), fromEvent(window, 'mouseout'))
+          )
         )
       )
     )
@@ -87,21 +98,13 @@ export const avoiding = (fish: Fish) => {
     .subscribe(changes.target);
 };
 
-export const following = (
-  fish: Fish,
-  parent?: Fish,
-  school?: School
-) => {
+export const following = (fish: Fish, parent?: Fish, school?: School) => {
   if (parent && school) {
     const parentChanges = watch(parent);
     const fishChanges = watch(fish);
 
     return parentChanges.target
-      .pipe(
-        map((position) =>
-          randomizePosition(position, school.size * 10)
-        )
-      )
+      .pipe(map((position) => randomizePosition(position, school.size * 200)))
       .subscribe(fishChanges.target);
   }
 };

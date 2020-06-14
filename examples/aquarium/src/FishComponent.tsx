@@ -5,12 +5,7 @@ import classNames from 'classNames';
 import { Fish } from './Fish';
 import { School } from './types';
 
-import {
-  swimming,
-  flipping,
-  avoiding,
-  following,
-} from './Fish.behaviors';
+import { swimming, flipping, avoiding, following } from './Fish.behaviors';
 
 import './index.scss';
 
@@ -51,13 +46,14 @@ export const FishComponent: React.FC<{
   return (
     <>
       <button
+        id={id}
+        className="fish"
         style={{
-          transform: `translate3d(${x}px, ${y}px, ${-z}px)`,
-          filter: z > 600 ? `blur(${Math.log(z / 100)}px)` : null,
+          top: y,
+          left: x,
+          transform: `translateZ(${-z}px)`,
           zIndex: Math.floor(2000 - z),
         }}
-        className="fish"
-        id={id}
         onClick={() => school.size++}
       >
         <span
@@ -66,6 +62,9 @@ export const FishComponent: React.FC<{
             swim: fish.target,
             flipped: fish.flipped,
           })}
+          style={{
+            filter: `blur(${Math.log(z / 50)}px)`,
+          }}
           role="image"
         >
           {children}

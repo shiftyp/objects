@@ -32,10 +32,7 @@ export const randomizePosition = (
     { ...target }
   );
 
-export const translatePosition = (
-  target: FishPosition,
-  ...impulses: Impulse[]
-) => {
+export const translatePosition = (target: FishPosition, ...impulses: Impulse[]) => {
   const current = { ...target };
 
   for (const { rho, theta, phi } of impulses) {
@@ -47,10 +44,7 @@ export const translatePosition = (
   return current;
 };
 
-export const inFieldOfView = (
-  position: FishPosition,
-  max: FishPosition
-) => {
+export const inFieldOfView = (position: FishPosition, max: FishPosition) => {
   const vFOV = 2 * Math.atan(max.x / (2 * position.z));
   const height = 2 * Math.tan(vFOV / 2) * position.z;
   const aspect = max.x / max.y;
