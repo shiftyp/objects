@@ -2,15 +2,13 @@ import { useRef, useMemo } from 'react';
 import { Stateful, Subscription } from '@objects/types';
 
 export const useBehavior = <Deps extends Stateful<{}>[]>(
-  cb: (...deps: Deps) => Subscription | undefined,
-  ...deps: Deps
+  cb: (...deps: Partial<Deps>) => Subscription | undefined,
+  deps: Deps
 ) => {
   let subscriptions = useRef<(Subscription | undefined)[]>([]);
 
   const unsubscribe = () => {
-    subscriptions.current.forEach((subscription) =>
-      subscription?.unsubscribe()
-    );
+    subscriptions.current.forEach((subscription) => subscription?.unsubscribe());
   };
 
   const subscribeToComplete = () => {

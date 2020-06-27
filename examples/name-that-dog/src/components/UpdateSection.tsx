@@ -10,7 +10,7 @@ export const UpdateSection: React.FC<{ updates: Readonly<Update>[] }> = ({
     (acc, update) => {
       return {
         errors: update.error ? [...acc.errors, update.error] : acc.errors,
-        updating: acc.updating || update.updating,
+        updating: acc.updating || update._updating,
       };
     },
     {

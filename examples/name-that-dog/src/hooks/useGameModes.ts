@@ -1,4 +1,4 @@
-import { useInstance } from 'object-hooks';
+import { useInstance } from '@objects/hooks';
 import { Mode } from '../logic/Mode';
 
 export const useGameModes = () => {

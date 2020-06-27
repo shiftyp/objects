@@ -154,8 +154,8 @@
         "signature": "1377923021927244ea19433873b997ad8585533b0a56d5de29cda497f7842756"
       },
       "../types/lib/types.d.ts": {
-        "version": "91e8318429651ee21d416a74fd2e9e039895c189911925a1cfe3fa68f1e2c508",
-        "signature": "91e8318429651ee21d416a74fd2e9e039895c189911925a1cfe3fa68f1e2c508"
+        "version": "23bb6f921dc6df051f4132c4f6d3aee0ac47d0890d9f7dc442e74f70bdc2ba40",
+        "signature": "23bb6f921dc6df051f4132c4f6d3aee0ac47d0890d9f7dc442e74f70bdc2ba40"
       },
       "../types/lib/index.d.ts": {
         "version": "890a7b9f3c26aeef94edf002dc96de63877bdbc4aa35d9a3b7ad47c89146d926",
@@ -166,11 +166,11 @@
         "signature": "04dd98c4a0748fdbd2704bc56fa3f4a3e1d74b8c80d2e40fc07e973101b6aa66"
       },
       "./src/changeobservable.ts": {
-        "version": "4a86547655f3d4d70eadd5f3c0d91b72b3f19ab40a84291861701d43b625dd63",
-        "signature": "368dfe9447723e4d101a3ed79c6ddbaca970efc9b99c3c78899e8346bdb68a25"
+        "version": "a4b13eb8473a48c2a96ca879cd62405fd2a374fd7e48f35474a34e807944ff05",
+        "signature": "6bed9d62daccaa6b11293dc78650f58681217babc2a2128e7e0e809c0aabbe8f"
       },
       "./src/createlayeredobjects.ts": {
-        "version": "824d0df8c28aaea54b4bb713f4c46255f030fb3dda26b059021e03de54872187",
+        "version": "0632589d7521dccec2ce0b38b46f436199d98a58535db24df7f2d44a10c6ed11",
         "signature": "16729ccc9242877abfe066f7415821b2b14fba5c683d31409653b648bf6f3a20"
       },
       "./src/update.ts": {
@@ -182,7 +182,7 @@
         "signature": "e231788163623a311973df21abc93d3ce674aa50370080abdfd1dda3da40c455"
       },
       "./src/constructstatefulobject.ts": {
-        "version": "24dc617f27de8bebc8812da42dbad5461e01a57260844b346afda0337702c80b",
+        "version": "408618ca2c2ee2215bc77666c2e32cd8fab7332101862c4453fa1275aa8c5411",
         "signature": "8ab234d2ff0384b09e527a62697a0a771462da9c52097d8fc0294877178435bf"
       },
       "../../node_modules/symbol-observable/index.d.ts": {
@@ -3404,14 +3404,7 @@
       "../../node_modules/typescript/lib/lib.es2020.string.d.ts",
       "../../node_modules/typescript/lib/lib.es2020.symbol.wellknown.d.ts",
       "../../node_modules/typescript/lib/lib.esnext.intl.d.ts",
-      "../types/lib/types.d.ts",
-      "../types/lib/index.d.ts",
-      "./src/observable.ts",
-      "./src/createlayeredobjects.ts",
-      "./src/update.ts",
-      "./src/reflection.ts",
       "../../node_modules/symbol-observable/index.d.ts",
-      "./src/index.ts",
       "../../node_modules/@types/color-name/index.d.ts",
       "../../node_modules/immutable/dist/immutable.d.ts",
       "../../node_modules/@types/react/global.d.ts",
@@ -3525,8 +3518,15 @@
       "../../node_modules/@types/styled-components/ts3.7/index.d.ts",
       "../../node_modules/@types/styled-system/index.d.ts",
       "../../node_modules/@types/rebass/index.d.ts",
+      "../types/lib/types.d.ts",
+      "../types/lib/index.d.ts",
       "./src/changeobservable.ts",
-      "./src/constructstatefulobject.ts"
+      "./src/constructstatefulobject.ts",
+      "./src/observable.ts",
+      "./src/createlayeredobjects.ts",
+      "./src/update.ts",
+      "./src/reflection.ts",
+      "./src/index.ts"
     ]
   },
   "version": "3.8.3"

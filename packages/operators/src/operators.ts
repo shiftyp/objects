@@ -1,22 +1,35 @@
-import { from, Observable, Scheduler, Subscription } from 'rxjs';
+import { from, Observable, Scheduler, NextObserver } from 'rxjs';
 
 import {
-  changeObservableMapSymbol,
+  changeObservableSymbol,
+  changedObservableSymbol,
   StatefulSymbols,
-  ChangeObservableMap,
   ChangeObserver,
 } from '@objects/types';
 
+type ChangeObserverRx<Obj, K extends keyof Obj> = ChangeObserver<Obj, K> &
+  NextObserver<Obj[K]>;
+
 type ChangeObservableMapRx<Obj> = {
-  [K in keyof Obj]: ChangeObserver<Obj, K> & Observable<Obj[K]>;
+  [K in keyof Obj]: ChangeObserverRx<Obj, K> & Observable<Obj[K]>;
 };
 
-export const watch = <Obj>(
+export const changes = <Obj>(
   obj: StatefulSymbols<Obj>,
   scheduler?: Scheduler
 ): ChangeObservableMapRx<Obj> => {
   // @ts-ignore
-  return obj[changeObservableMapSymbol]((obs: any) =>
+  return obj[changeObservableSymbol]((obs: any) =>
+    scheduler ? from(obs, scheduler) : from(obs)
+  );
+};
+
+export const changed = <Obj>(
+  obj: StatefulSymbols<Obj>,
+  scheduler?: Scheduler
+): ChangeObservableMapRx<Obj> => {
+  // @ts-ignore
+  return obj[changedObservableSymbol]((obs: any) =>
     scheduler ? from(obs, scheduler) : from(obs)
   );
 };

@@ -1,14 +1,5 @@
-import { watch } from '@objects/operators';
-import {
-  fromEvent,
-  from,
-  animationFrameScheduler,
-  Subscription,
-  EMPTY,
-  merge,
-  interval,
-  race,
-} from 'rxjs';
+import { changes } from '@objects/operators';
+import { fromEvent, from, animationFrameScheduler, interval, race } from 'rxjs';
 import {
   map,
   filter,
@@ -16,8 +7,6 @@ import {
   takeUntil,
   throttleTime,
   startWith,
-  delay,
-  delayWhen,
 } from 'rxjs/operators';
 import {
   randomPosition,
@@ -26,21 +15,18 @@ import {
   translatePosition,
 } from './utils';
 
+// TODO: Split into separate files
+
 import { Fish } from './Fish';
 import { FishPosition, School } from './types';
 
-export const flipping = (fish: Fish) => {
-  const changes = watch(fish);
+export const flipping = (fish: Fish) =>
+  changes(fish)
+    .position.pipe(map((position) => position.x >= fish.position.x))
+    .subscribe(changes(fish).flipped);
 
-  return changes.position
-    .pipe(map((position) => position.x >= fish.position.x))
-    .subscribe(changes.flipped);
-};
-
-export const swimming = (fish: Fish) => {
-  const changes = watch(fish);
-
-  return fromEvent(window, 'resize')
+export const swimming = (fish: Fish) =>
+  fromEvent(window, 'resize')
     .pipe(
       startWith({}),
       switchMap(() =>
@@ -51,13 +37,10 @@ export const swimming = (fish: Fish) => {
       filter((position) => position === 'rest'),
       map(() => randomPosition())
     )
-    .subscribe(changes.target);
-};
+    .subscribe(changes(fish).target);
 
-export const avoiding = (fish: Fish) => {
-  const changes = watch(fish);
-
-  return fromEvent(window, 'mousedown')
+export const avoiding = (fish: Fish) =>
+  fromEvent(window, 'mousedown')
     .pipe(
       filter((event) => {
         const element = event.target as HTMLElement;
@@ -95,16 +78,11 @@ export const avoiding = (fish: Fish) => {
         return translatePosition(fish.position, impulse);
       })
     )
-    .subscribe(changes.target);
-};
+    .subscribe(changes(fish).target);
 
-export const following = (fish: Fish, parent?: Fish, school?: School) => {
-  if (parent && school) {
-    const parentChanges = watch(parent);
-    const fishChanges = watch(fish);
-
-    return parentChanges.target
-      .pipe(map((position) => randomizePosition(position, school.size * 200)))
-      .subscribe(fishChanges.target);
-  }
-};
+export const following = (fish: Fish, parent?: Fish, school?: School) =>
+  parent &&
+  school &&
+  changes(parent)
+    .target.pipe(map((position) => randomizePosition(position, school.size * 200)))
+    .subscribe(changes(fish).target);

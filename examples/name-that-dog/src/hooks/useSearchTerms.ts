@@ -1,7 +1,10 @@
-import { Stateful, useInstance, observeMap, observe } from 'object-hooks';
 import { useCallback, useEffect } from 'react';
+import { useInstance, useBehavior, useObject } from '@objects/hooks';
+import { Stateful } from '@objects/types';
+import { changes, changed } from '@objects/operators';
+import { map, take } from 'rxjs/operators';
+
 import { BreedTerms } from '../logic/BreedTerms';
-import { BreedLists } from '../logic/BreedLists';
 import { BreedsCollection } from '../logic/BreedsCollection';
 import { Mode } from '../logic/Mode';
 
@@ -10,35 +13,15 @@ export const useSearchTerms = (
   randomMode: Stateful<Mode>
 ) => {
   const [terms, resetTerms] = useInstance(BreedTerms);
-  const [lists, resestLists] = useInstance(BreedLists);
+  const [lists, resetLists] = useObject({
+    primaryList: [] as string[],
+    secondaryList: [] as string[],
+  });
 
   const reset = () => {
     resetTerms();
-    resestLists();
+    resetLists();
   };
-
-  useEffect(() => {
-    return observeMap(randomMode, {
-      value: () => {
-        randomize();
-      },
-    });
-  }, [randomMode]);
-
-  useEffect(() => {
-    return observeMap(breeds, {
-      data: (data) => {
-        lists.primaryList = data ? Object.keys(data) : [];
-        randomize();
-      },
-    });
-  }, [breeds]);
-
-  useObserveMap(terms, {
-    selected: (selected) => {
-      lists.secondaryList = breeds.data?.[selected] || [];
-    },
-  });
 
   const randomize = useCallback(async () => {
     const selectRandom = (arr: string[]) => {
@@ -47,6 +30,40 @@ export const useSearchTerms = (
     terms.selected = selectRandom(lists.primaryList);
     terms.secondarySelected = selectRandom(lists.secondaryList);
   }, [terms, lists]);
+
+  useBehavior(
+    () =>
+      changes(randomMode).value.subscribe((value) => {
+        if (value) {
+          randomize();
+        }
+      }),
+    [randomMode]
+  );
+
+  useBehavior(
+    () =>
+      changes(breeds)
+        .data.pipe(map((data) => (data ? Object.keys(data) : [])))
+        .subscribe(changes(lists).primaryList),
+    [breeds, lists]
+  );
+
+  useBehavior(() => changed(lists).primaryList.subscribe(() => randomize()), [
+    lists,
+  ]);
+
+  useBehavior(
+    () =>
+      changes(terms)
+        .selected.pipe(
+          map((selected) =>
+            selected && breeds.data?.[selected] ? breeds.data[selected] : []
+          )
+        )
+        .subscribe(changes(lists).secondaryList),
+    [terms, lists]
+  );
 
   return {
     terms,

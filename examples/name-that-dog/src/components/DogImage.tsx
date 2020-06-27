@@ -3,15 +3,19 @@ import React from 'react';
 import { Image, Box } from 'rebass';
 
 import { ImageSearch } from '../logic/ImageSearch';
+import { useImageSearch } from '../hooks/useImageSearch';
+import { UpdateSection } from './UpdateSection';
 
 export const DogImage: React.FC<{
-  imageSearch: ImageSearch;
+  terms: string[];
   onClick: (e: React.MouseEvent) => void;
   fadeOut: boolean;
-}> = ({ imageSearch, onClick, fadeOut }) => {
+}> = ({ terms, onClick, fadeOut }) => {
+  const { imageSearch } = useImageSearch(terms);
+
   return (
     <Box width={200} margin={10}>
-      {imageSearch.data ? (
+      <UpdateSection updates={[imageSearch]}>
         <Image
           style={{
             maxWidth: 200,
@@ -19,10 +23,10 @@ export const DogImage: React.FC<{
             cursor: 'pointer',
           }}
           onClick={onClick}
-          src={imageSearch.data}
-          alt={imageSearch.breed || ''}
+          src={imageSearch.data || undefined}
+          alt={imageSearch.terms.join(' ') || ''}
         />
-      ) : null}
+      </UpdateSection>
     </Box>
   );
 };

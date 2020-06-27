@@ -1,4 +1,4 @@
-import { useInstance } from 'object-hooks';
+import { useInstance } from '@objects/hooks';
 import { useEffect } from 'react';
 import { BreedsCollection } from '../logic/BreedsCollection';
 

@@ -34,7 +34,7 @@ export const Game: React.FC = () => {
     images.push(
       <DogImage
         key={search.id}
-        imageSearch={search}
+        terms={search}
         onClick={createOnImageClick(search)}
         fadeOut={selectionMode.value && selection.image !== search}
       />
@@ -42,7 +42,7 @@ export const Game: React.FC = () => {
   }
 
   return (
-    <UpdateSection updates={[breedsCollection, ...Object.values(searches)]}>
+    <UpdateSection updates={[breedsCollection]}>
       <Flex>
         {randomMode.value ? (
           <RandomForm randomize={randomize} addSearch={addSearch} />

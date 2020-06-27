@@ -158,8 +158,8 @@
         "signature": "7ccece60f62968f5765383f1f5322ace6937e42c3a2068834ac214fe24f9b7bc"
       },
       "./src/types.ts": {
-        "version": "90cae98d15b631d0e7df0689e2eafb5db6f2bb6984d54ff9c0508b2e211575c9",
-        "signature": "97a1aa09e0e04a36df53faed012754c3a200ed27b8020f6b8c924754e4c3818b"
+        "version": "f2f130fce86f12992ab4eeb83b7d4e41fe0ad55463b8d792a839e1f6fad4ad15",
+        "signature": "23bb6f921dc6df051f4132c4f6d3aee0ac47d0890d9f7dc442e74f70bdc2ba40"
       },
       "./src/index.ts": {
         "version": "d5c19655468e29f60c871b21e73af8ebc653f736e7123ade916f22c4a5f80ce5",

@@ -1,6 +1,6 @@
 import { ObservableLayer } from './observable';
 import {
-  changeObservableMapSymbol,
+  changeObservableSymbol,
   ObjectObservableMap,
   ObjectObservable,
   ObjectObserverArgs,
@@ -11,6 +11,9 @@ import {
 } from '@objects/types';
 
 export class ChangeObservableLayer<Obj> extends ObservableLayer<Obj> {
+  constructor(onEnd: (cb: () => void) => void, private symbol: Symbol) {
+    super(onEnd);
+  }
   makeObservableMap = (receiver: Obj) => (
     makeObservable?: (subject: any) => any
   ): ChangeObservableMap<Obj> => {
@@ -64,7 +67,7 @@ export class ChangeObservableLayer<Obj> extends ObservableLayer<Obj> {
   };
 
   get(target: Obj, prop: PropertyKey, reciever: Obj) {
-    if (prop === changeObservableMapSymbol) {
+    if (prop === this.symbol) {
       return this.makeObservableMap(reciever);
     }
   }

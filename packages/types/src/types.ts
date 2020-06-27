@@ -1,31 +1,22 @@
 import Symbol_observable from 'symbol-observable';
 
-export const changeObservableMapSymbol = Symbol(
-  'ChangeObservableMap'
-);
+export const changeObservableSymbol = Symbol('ChangeObservable');
 
-export interface ObjectObserver<
-  Obj,
-  Key extends keyof Obj = keyof Obj
-> {
+export const changedObservableSymbol = Symbol('ChangedObservable');
+
+export interface ObjectObserver<Obj, Key extends keyof Obj = keyof Obj> {
   next: ((changes: Record<Key, Obj[Key]>) => void) | null;
   error?: ((e: any) => void) | null;
   complete?: (() => void) | null;
 }
 
-export interface ChangeObserver<
-  Obj,
-  Key extends keyof Obj = keyof Obj
-> {
+export interface ChangeObserver<Obj, Key extends keyof Obj = keyof Obj> {
   next: ((changes: Obj[Key]) => void) | null;
   error?: ((e: any) => void) | null;
   complete?: (() => void) | null;
 }
 
-export type ObjectObserverArgs<
-  Obj,
-  Key extends keyof Obj = keyof Obj
-> =
+export type ObjectObserverArgs<Obj, Key extends keyof Obj = keyof Obj> =
   | [ObjectObserver<Obj, Key>]
   | [
       ObjectObserver<Obj, Key>['next']?,
@@ -33,10 +24,7 @@ export type ObjectObserverArgs<
       ObjectObserver<Obj, Key>['complete']?
     ];
 
-export type ChangeObserverArgs<
-  Obj,
-  Key extends keyof Obj = keyof Obj
-> =
+export type ChangeObserverArgs<Obj, Key extends keyof Obj = keyof Obj> =
   | [ChangeObserver<Obj, Key>]
   | [
       ChangeObserver<Obj, Key>['next']?,
@@ -46,18 +34,12 @@ export type ChangeObserverArgs<
 
 export type Subscription = { unsubscribe: () => void };
 
-export interface ObjectObservable<
-  Obj,
-  Key extends keyof Obj = keyof Obj
-> {
+export interface ObjectObservable<Obj, Key extends keyof Obj = keyof Obj> {
   subscribe: (...args: ObjectObserverArgs<Obj, Key>) => Subscription;
   [Symbol.observable](): ObjectObservable<Obj, Key>;
 }
 
-export interface ChangeObservable<
-  Obj,
-  Key extends keyof Obj = keyof Obj
-> {
+export interface ChangeObservable<Obj, Key extends keyof Obj = keyof Obj> {
   subscribe: (...args: ChangeObserverArgs<Obj, Key>) => Subscription;
   [Symbol.observable](): ChangeObservable<Obj, Key>;
 }
@@ -72,7 +54,7 @@ export type ChangeObservableMap<Obj> = {
 
 export interface StatefulSymbols<Obj> {
   [Symbol.observable](): ObjectObservable<Obj>;
-  [changeObservableMapSymbol](): ChangeObservableMap<Obj>;
+  [changeObservableSymbol](): ChangeObservableMap<Obj>;
 }
 
 export type Stateful<Obj> = Obj & StatefulSymbols<Obj>;
@@ -88,12 +70,7 @@ export interface ObjectLayer<Obj extends Object> {
   ) => PropertyDescriptor | void;
   has: (target: Obj, p: PropertyKey) => boolean | void;
   get: (target: Obj, p: PropertyKey, receiver: any) => any | void;
-  set: (
-    target: Obj,
-    p: PropertyKey,
-    value: any,
-    receiver: any
-  ) => boolean | void;
+  set: (target: Obj, p: PropertyKey, value: any, receiver: any) => boolean | void;
   deleteProperty: (target: Obj, p: PropertyKey) => boolean | void;
   defineProperty: (
     target: Obj,
@@ -103,9 +80,5 @@ export interface ObjectLayer<Obj extends Object> {
   enumerate: (target: Obj) => PropertyKey[] | void;
   ownKeys: (target: Obj) => PropertyKey[] | void;
   apply: (target: Obj, thisArg: any, argArray?: any) => any | void;
-  construct: (
-    target: Obj,
-    argArray: any,
-    newTarget?: any
-  ) => object | void;
+  construct: (target: Obj, argArray: any, newTarget?: any) => object | void;
 }

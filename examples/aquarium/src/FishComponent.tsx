@@ -26,10 +26,10 @@ export const FishComponent: React.FC<{
     size: 0,
   });
 
-  useBehavior(swimming, fish);
-  useBehavior(flipping, fish);
-  useBehavior(avoiding, fish);
-  useBehavior(following, fish, parent?.fish, parent?.school);
+  useBehavior(swimming, [fish]);
+  useBehavior(flipping, [fish]);
+  useBehavior(avoiding, [fish]);
+  useBehavior(following, [fish, parent?.fish, parent?.school]);
 
   let schoolFish = [];
 

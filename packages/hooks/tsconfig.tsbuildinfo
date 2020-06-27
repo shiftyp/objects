@@ -221,17 +221,17 @@
         "version": "df7a3f45c412e06ba6f5362f215d04d71629af98dc4acc82afc4c92dcb21de27",
         "signature": "851427a5824b0897ab592df2f0d20e592a570352838d817bfdf8dfd3cf098d8f"
       },
-      "./src/useinstanceeffect.ts": {
-        "version": "920fb4fc7fe77b0311af401eae9afc50b79e6bd03e8adf6eba6f318ef0a23454",
-        "signature": "adffad0858cd61ef190147fb1e7bbedb43954de5215ecd62e712af988c8ce3ad"
+      "./src/usebehavior.ts": {
+        "version": "44dc8efd91302e1dabf0d90f6fe39899c76f4cf3331e087e6f6e2ad0cebc5618",
+        "signature": "51803bd256fbd00caf7a3a2262fdf5d8d1abd285419101874b6f1b999f7cf461"
       },
       "./src/useobject.ts": {
         "version": "aa153d4d0065b7e5df4eb21bdb282190afd4a9673d74dc4080ebb7886d64448d",
         "signature": "bcdee9d2738988687c45c7eba9f444cf947cd6060c9ca79cd336f1d272bcc1d4"
       },
       "./src/index.ts": {
-        "version": "a716088fe855bb6661ad5e80ea8fd85d093f49be96d8a6de4b8719943bbbc648",
-        "signature": "ad61d804082ff3ccecc98273b20970cd5534fc36c2decd87f2152c25584e9d96"
+        "version": "7dbd6d53eae290f11856a6dfd0f12ae980964dd339cbfbcbe8866f9ac7d28e03",
+        "signature": "9e442124208aa9e8790c4162e6d4a37cd70acefd6f149c4b6cb17b162981283b"
       },
       "../../node_modules/@types/color-name/index.d.ts": {
         "version": "f0cb4b3ab88193e3e51e9e2622e4c375955003f1f81239d72c5b7a95415dad3e",
@@ -1054,7 +1054,7 @@
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "./src/useinstanceeffect.ts": [
+      "./src/usebehavior.ts": [
         "../../node_modules/@types/react/index.d.ts",
         "../types/lib/index.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
@@ -1076,7 +1076,7 @@
         "./src/useforceupdate.ts",
         "./src/useinstance.ts",
         "./src/useinstances.ts",
-        "./src/useinstanceeffect.ts",
+        "./src/usebehavior.ts",
         "./src/useobject.ts",
         "./src/useobjects.ts",
         "../../node_modules/@types/node/fs.d.ts",
@@ -2447,7 +2447,7 @@
       "./src/useinstance.ts": [
         "../types/lib/index.d.ts"
       ],
-      "./src/useinstanceeffect.ts": [
+      "./src/usebehavior.ts": [
         "../types/lib/index.d.ts"
       ],
       "./src/useobject.ts": [
@@ -2457,7 +2457,7 @@
         "./src/useforceupdate.ts",
         "./src/useinstance.ts",
         "./src/useinstances.ts",
-        "./src/useinstanceeffect.ts",
+        "./src/usebehavior.ts",
         "./src/useobject.ts",
         "./src/useobjects.ts"
       ],
@@ -3659,7 +3659,7 @@
       "../../node_modules/@types/styled-components/ts3.7/index.d.ts",
       "../../node_modules/@types/styled-system/index.d.ts",
       "../../node_modules/@types/rebass/index.d.ts",
-      "./src/useinstanceeffect.ts",
+      "./src/usebehavior.ts",
       "./src/index.ts"
     ]
   },

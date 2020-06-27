@@ -410,16 +410,16 @@
         "signature": "41249bfce2b6ec504f2b83fd6704194277e264b13f1b896550f60dc6f98b36a3"
       },
       "../types/lib/types.d.ts": {
-        "version": "91e8318429651ee21d416a74fd2e9e039895c189911925a1cfe3fa68f1e2c508",
-        "signature": "91e8318429651ee21d416a74fd2e9e039895c189911925a1cfe3fa68f1e2c508"
+        "version": "23bb6f921dc6df051f4132c4f6d3aee0ac47d0890d9f7dc442e74f70bdc2ba40",
+        "signature": "23bb6f921dc6df051f4132c4f6d3aee0ac47d0890d9f7dc442e74f70bdc2ba40"
       },
       "../types/lib/index.d.ts": {
         "version": "890a7b9f3c26aeef94edf002dc96de63877bdbc4aa35d9a3b7ad47c89146d926",
         "signature": "890a7b9f3c26aeef94edf002dc96de63877bdbc4aa35d9a3b7ad47c89146d926"
       },
       "./src/operators.ts": {
-        "version": "7ee2f4a23fa984e543c73f0eed213e240b20b7efda04116b1a8304d87c280cfb",
-        "signature": "3924b23cfeaf5a4f32392b8d8d6359c634e1f15f520733d6db76a7c9afa90027"
+        "version": "65d7335341d5507fdfa524675511c29ea6ab61a67c90241e5867511ad78ff7a5",
+        "signature": "2f0ba8adc5928ec25ed07a4511a4ade8dbcadc288bef0c76c6a3886365ae6d79"
       },
       "./src/index.ts": {
         "version": "f0347640ee809d05b804d11475f6373c61b5899c099fa0928890995748f8a136",
@@ -4777,8 +4777,6 @@
       "../../node_modules/rxjs/internal/scheduled/scheduled.d.ts",
       "../../node_modules/rxjs/internal/config.d.ts",
       "../../node_modules/rxjs/index.d.ts",
-      "../types/lib/types.d.ts",
-      "../types/lib/index.d.ts",
       "../../node_modules/@types/color-name/index.d.ts",
       "../../node_modules/immutable/dist/immutable.d.ts",
       "../../node_modules/@types/react/global.d.ts",
@@ -4892,7 +4890,9 @@
       "../../node_modules/@types/styled-components/ts3.7/index.d.ts",
       "../../node_modules/@types/styled-system/index.d.ts",
       "../../node_modules/@types/rebass/index.d.ts",
+      "../types/lib/types.d.ts",
       "./src/operators.ts",
+      "../types/lib/index.d.ts",
       "./src/index.ts"
     ]
   },

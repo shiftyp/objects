@@ -2,12 +2,7 @@ import { DogApiFetch } from './DogApiFetch';
 import { BreedTerms } from './BreedTerms';
 
 export class ImageSearch extends DogApiFetch<string> {
-  constructor(
-    searchTerms: BreedTerms,
-    public id: number,
-    public terms = searchTerms.toArray(),
-    public breed = terms.join(' ')
-  ) {
+  constructor(public terms: string[]) {
     super();
   }
 

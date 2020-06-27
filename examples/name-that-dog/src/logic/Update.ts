@@ -1,7 +1,11 @@
 export class Update<Data = any> {
-  updating: boolean = false;
+  protected _updating: boolean = false;
   error: Error | null = null;
   data: Data | null = null;
+
+  get updating() {
+    return this._updating;
+  }
 
   protected async update(promise: Promise<Data>) {
     this.begin();
@@ -16,13 +20,13 @@ export class Update<Data = any> {
   }
 
   protected begin() {
-    this.updating = true;
+    this._updating = true;
     this.error = null;
     this.data = null;
   }
 
   protected finish() {
-    this.updating = false;
+    this._updating = false;
   }
 
   protected failure(error: Error) {

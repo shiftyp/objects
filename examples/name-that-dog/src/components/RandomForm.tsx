@@ -2,11 +2,11 @@ import React, { FormEvent, ChangeEvent } from 'react';
 import { Input } from '@rebass/forms';
 import { Button, Box, Flex } from 'rebass';
 
-import { useObject } from 'object-hooks';
+import { useObject } from '@objects/hooks';
 
 export const RandomForm: React.FC<{
   randomize: () => void;
-  addSearch: () => Promise<void>;
+  addSearch: () => void;
 }> = ({ randomize, addSearch }) => {
   const [local] = useObject({
     numDogs: 5,

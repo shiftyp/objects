@@ -3,6 +3,10 @@ export class BreedTerms {
   secondarySelected: string | null = null;
 
   toArray() {
+    if (this.selected === null) {
+      return [];
+    }
+
     const ret = [this.selected];
 
     if (this.secondarySelected) {

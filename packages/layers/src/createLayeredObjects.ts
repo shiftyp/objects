@@ -25,15 +25,19 @@ export const createLayeredObjects = <Obj extends Object>(
     ] as (keyof ProxyHandler<Obj>)[]).reduce(
       (handler, key) => ({
         [key]: (...args: any[]) => {
+          let ret = undefined;
+
           for (const layer of layers) {
-            const ret = layer[key]?.(
+            const layerRet = layer[key]?.(
               // @ts-ignore
               ...args
             );
-            if (ret !== undefined) {
-              return ret;
+            if (layerRet !== undefined) {
+              ret = layerRet;
             }
           }
+
+          return ret;
         },
         ...handler,
       }),
