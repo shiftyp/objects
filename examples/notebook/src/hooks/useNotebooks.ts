@@ -6,8 +6,8 @@ import { useEffect } from 'react';
 
 export const useNotebooks = () => {
   const [database] = useInstance(Database);
-  const [editor, resetEditor] = useInstance(EditorLogic, database);
-  const [selector, resetSelector] = useInstance(NotebookSelectorLogic, database);
+  const [editor, resetEditor] = useInstance(EditorLogic, [], database);
+  const [selector, resetSelector] = useInstance(NotebookSelectorLogic, [], database);
 
   useEffect(() => {
     database.open();

@@ -1,18 +1,16 @@
-import { useRef, useEffect } from 'react';
-import { useObject, useInstances, useInstance } from '@objects/hooks';
-import { Stateful } from '@objects/types';
+import { useEffect } from 'react'
+import { useInstance } from '@objects/hooks'
 
-import { ImageSearch } from '../logic/ImageSearch';
-import { BreedTerms } from '../logic/BreedTerms';
+import { ImageSearch } from '../logic/ImageSearch'
 
-export const useImageSearch = (terms: string[]) => {
-  const [imageSearch] = useInstance(ImageSearch, terms);
+export const useImageSearch = (terms: string[], id: string) => {
+  const [imageSearch] = useInstance(ImageSearch, [], terms, id)
 
   useEffect(() => {
-    imageSearch.search();
-  }, [imageSearch]);
+    imageSearch.search()
+  }, [imageSearch])
 
   return {
     imageSearch,
-  };
-};
+  }
+}

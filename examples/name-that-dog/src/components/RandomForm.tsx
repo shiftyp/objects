@@ -16,11 +16,11 @@ export const RandomForm: React.FC<{
     local.numDogs = e.target.valueAsNumber;
   };
 
-  const onFormSubmit = async (e: FormEvent) => {
+  const onFormSubmit = (e: FormEvent) => {
     e.preventDefault();
     for (var i = 0; i < local.numDogs; i++) {
       randomize();
-      await addSearch();
+      addSearch();
     }
   };
 

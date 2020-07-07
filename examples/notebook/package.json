@@ -4,8 +4,8 @@
   "description": "Your private notebook",
   "main": "src/index.tsx",
   "scripts": {
-    "start": "parcel ./src/index.html",
-    "build": "parcel build ./src/index.html"
+    "start": "NODE_PATH=../../ parcel ./src/index.html",
+    "build": "NODE_PATH=../../ parcel build ./src/index.html"
   },
   "dependencies": {
     "@types/draft-js": "^0.10.40",

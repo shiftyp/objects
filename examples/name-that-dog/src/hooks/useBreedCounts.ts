@@ -1,39 +1,40 @@
-import { useObject, useBehavior } from '@objects/hooks';
-import { Stateful } from '@objects/types';
-import { from } from 'rxjs';
+import { useObject, useObserve } from '@objects/hooks'
+import { Stateful } from '@objects/types'
 
-import { ImageSearch } from '../logic/ImageSearch';
+import { stream } from '@objects/operators'
+import { map } from 'rxjs/operators'
 
-export const useBreedCounts = (searches: Stateful<Record<number, string[]>>) => {
-  const [counts, reset] = useObject<Record<string, number>>({});
+export const useBreedCounts = (searches: Stateful<Record<string, string[]>>) => {
+  const [counts, reset] = useObject<Record<string, number>>({}, [searches])
 
-  const observer = {
-    next: (changes: Record<number, string[]>) => {
-      for (const key of Object.keys(changes)) {
-        const index = parseInt(key, 10);
+  useObserve(
+    () =>
+      stream(searches)
+        .pipe(
+          map((changes: Record<string, string[]>) => {
+            const newCounts: Record<string, number | undefined> = {}
 
-        if (!isNaN(index)) {
-          const oldBreed = searches[index]?.join(' ');
-          const newBreed = changes[index]?.join(' ');
+            for (const key of Object.keys(changes)) {
+              const oldBreed = searches[key]?.join(' ')
+              const newBreed = changes[key]?.join(' ')
 
-          if (oldBreed === undefined && newBreed) {
-            counts[newBreed] = (counts[newBreed] || 0) + 1;
-          } else if (oldBreed && newBreed === undefined) {
-            counts[oldBreed] = (counts[oldBreed] || 1) - 1;
+              if (oldBreed === undefined && newBreed) {
+                newCounts[newBreed] = (counts[newBreed] || 0) + 1
+              } else if (oldBreed && newBreed === undefined) {
+                newCounts[oldBreed] = (counts[oldBreed] || 1) - 1
 
-            if (!counts[oldBreed]) {
-              delete counts[oldBreed];
+                if (!newCounts[newBreed]) {
+                  newCounts[oldBreed] = undefined
+                }
+              }
             }
-          }
-        }
-      }
-    },
-  };
 
-  useBehavior(() => {
-    // @ts-ignore
-    return from(searches).subscribe(observer);
-  }, [searches]);
+            return newCounts
+          })
+        )
+        .subscribe(stream(counts)),
+    [searches]
+  )
 
-  return { counts, reset };
-};
+  return { counts, reset }
+}

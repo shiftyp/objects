@@ -2,13 +2,14 @@ import {
   Stateful,
   changeObservableSymbol,
   changedObservableSymbol,
-} from '@objects/types';
+} from '@objects/types'
 
-import { ObservableLayer } from './observable';
-import { createLayeredObjects } from './createLayeredObjects';
-import { UpdateLayer } from './update';
-import { ReflectionLayer } from './reflection';
-import { ChangeObservableLayer } from './changeObservable';
+import { ObservableLayer } from './layers/observable'
+import { UpdateLayer } from './layers/update'
+import { ReflectionLayer } from './layers/reflection'
+import { ChangeObservableLayer } from './layers/changeObservable'
+
+import { createLayeredObjects } from './createLayeredObjects'
 
 export const constructStatefulObject = <Obj>(
   obj: Obj,
@@ -18,14 +19,14 @@ export const constructStatefulObject = <Obj>(
   const changeObservableLayer = new ChangeObservableLayer(
     onEnd,
     changeObservableSymbol
-  );
+  )
   const changedObservableLayer = new ChangeObservableLayer(
     onEnd,
     changedObservableSymbol
-  );
-  const observableLayer = new ObservableLayer(onEnd);
-  const updateLayer = new UpdateLayer(update, onEnd);
-  const reflectionLayer = new ReflectionLayer(onEnd);
+  )
+  const observableLayer = new ObservableLayer(onEnd)
+  const updateLayer = new UpdateLayer(update, onEnd)
+  const reflectionLayer = new ReflectionLayer(Reflect, onEnd)
 
   return createLayeredObjects(Object.assign({}, obj), [
     changeObservableLayer,
@@ -33,5 +34,5 @@ export const constructStatefulObject = <Obj>(
     reflectionLayer,
     changedObservableLayer,
     updateLayer,
-  ]) as Stateful<Obj>;
-};
+  ]) as Stateful<Obj>
+}

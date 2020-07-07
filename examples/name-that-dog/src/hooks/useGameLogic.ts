@@ -1,36 +1,33 @@
-import { Stateful } from '@objects/types';
+import { useBreeds } from './useBreeds'
+import { useSearchTerms } from './useSearchTerms'
 
-import { ImageSearch } from '../logic/ImageSearch';
-import { useBreeds } from './useBreeds';
-import { useSearchTerms } from './useSearchTerms';
-
-import { useGameModes } from './useGameModes';
-import { useGameSelection } from './useGameSelection';
-import { useSearches } from './useSearches';
+import { useGameModes } from './useGameModes'
+import { useGameSelection } from './useGameSelection'
+import { useSearches } from './useSearches'
 
 export const useGameLogic = () => {
-  const { randomMode, selectionMode, reset: resetGameModes } = useGameModes();
-  const { selection, reset: resetGameSelection } = useGameSelection(selectionMode);
-  const { collection } = useBreeds();
-  const { terms, lists, randomize, reset: resetTerms } = useSearchTerms(
-    collection,
-    randomMode
-  );
-  const { searches, addSearch, reset: resetSearches } = useSearches(terms);
+  const { randomMode, selectionMode } = useGameModes()
+  const { selection } = useGameSelection(selectionMode)
+  const { collection } = useBreeds()
+  const { terms, lists, randomize } = useSearchTerms(collection, randomMode)
+  const { searches, addSearch, reset } = useSearches(terms)
 
   const selectBreed = (breed: string) => {
-    if (selection.image && selection.image.breed === breed) {
-      delete searches[selection.image.id];
-      selection.image = null;
+    if (selection.dog && selection.dog.terms.join(' ') === breed) {
+      delete searches[selection.dog.id]
+      selection.dog = null
     }
-  };
+  }
 
-  const createOnImageClick = (search: Stateful<ImageSearch>) => (
+  const createOnImageClick = (id: string, terms: string[]) => (
     e: React.MouseEvent
   ) => {
-    e.stopPropagation();
-    selection.image = search;
-  };
+    e.stopPropagation()
+    selection.dog = {
+      id,
+      terms,
+    }
+  }
 
   return {
     lists: lists,
@@ -42,13 +39,8 @@ export const useGameLogic = () => {
     addSearch: addSearch,
     terms: terms,
     randomize: randomize,
-    reset: () => {
-      resetGameModes();
-      resetGameSelection();
-      resetTerms();
-      resetSearches();
-    },
+    reset,
     selectBreed,
     createOnImageClick,
-  };
-};
+  }
+}

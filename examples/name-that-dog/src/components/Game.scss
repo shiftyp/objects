@@ -1,0 +1,17 @@
+.dog-enter {
+  transform: scale(0.1);
+  transition: all 500ms ease-in;
+}
+
+.dog-enter.dog-enter-active {
+  transform: scale(1);
+}
+
+.dog-exit {
+  transform: scale(1);
+  transition: all 500ms ease-in;
+}
+
+.dog-exit.dog-exit-active {
+  transform: scale(0.1);
+}

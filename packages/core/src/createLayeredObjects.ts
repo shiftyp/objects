@@ -1,4 +1,4 @@
-import { ObjectLayer } from '@objects/types';
+import { ObjectLayer } from '@objects/types'
 
 export const createLayeredObjects = <Obj extends Object>(
   instance: Obj,
@@ -25,22 +25,22 @@ export const createLayeredObjects = <Obj extends Object>(
     ] as (keyof ProxyHandler<Obj>)[]).reduce(
       (handler, key) => ({
         [key]: (...args: any[]) => {
-          let ret = undefined;
+          let ret = undefined
 
           for (const layer of layers) {
             const layerRet = layer[key]?.(
               // @ts-ignore
               ...args
-            );
+            )
             if (layerRet !== undefined) {
-              ret = layerRet;
+              ret = layerRet
             }
           }
 
-          return ret;
+          return ret
         },
         ...handler,
       }),
       {}
     )
-  );
+  )

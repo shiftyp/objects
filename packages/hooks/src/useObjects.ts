@@ -1,33 +1,28 @@
-import { useForceUpdate } from './useForceUpdate';
-import {
-  constructStatefulObject,
-  ReflectionLayer,
-} from '@objects/layers';
-import { Stateful } from '@objects/types';
-import { useRef, useMemo } from 'react';
+import { useUpdate } from './useUpdate'
+import { constructStatefulObject } from '@objects/core'
+import { Stateful } from '@objects/types'
+import { useRef, useMemo, useEffect } from 'react'
+import { useReset } from './useReset'
 
 export const useObjects = <Obj extends Object>(
-  obj: Obj
+  obj: Obj,
+  deps?: Stateful<{}>[]
 ): [() => Stateful<Obj>, () => void] => {
-  const [update] = useForceUpdate();
-  const resetHandlersRef = useRef<Set<() => void>>(
-    useMemo(() => new Set(), [])
-  );
+  const [update] = useUpdate()
+  const resetHandlersRef = useRef<Set<() => void>>(useMemo(() => new Set(), []))
 
   const reset = () => {
-    resetHandlersRef.current.forEach((reset) => reset());
-    resetHandlersRef.current.clear();
-  };
+    resetHandlersRef.current.forEach((reset) => reset())
+    resetHandlersRef.current.clear()
+  }
 
   const addResetHandler = (handler: () => void) => {
-    resetHandlersRef.current.add(handler);
-  };
+    resetHandlersRef.current.add(handler)
+  }
 
-  const construct = constructStatefulObject(
-    obj,
-    update,
-    addResetHandler
-  );
+  const construct = constructStatefulObject(obj, update, addResetHandler)
 
-  return [construct, reset];
-};
+  useReset(reset, deps)
+
+  return [construct, reset]
+}

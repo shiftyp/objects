@@ -169,13 +169,13 @@
         "version": "e726c865f71af8f20d4a03e17182f62a38e1fd300161b867dc6068ce6529f7f2",
         "signature": "e726c865f71af8f20d4a03e17182f62a38e1fd300161b867dc6068ce6529f7f2"
       },
-      "./src/useforceupdate.ts": {
-        "version": "5f50dee0b363f044bf524b7b454add0991ecc6661d5af309cd3a5670875e2daa",
-        "signature": "55ead42a738ded70c557372cfe679692cc09c67b54f030139856646d67b5ecb6"
+      "./src/useupdate.ts": {
+        "version": "42d722fd5345ef63b66a6ee216b079f32ede7c8132de56e1f902fa590a79bae5",
+        "signature": "49b7ac2e4f0dfa9c8fbf2333bb01ddb33bdc8920444223261ca133e7ee28c0b7"
       },
       "../types/lib/types.d.ts": {
-        "version": "97a1aa09e0e04a36df53faed012754c3a200ed27b8020f6b8c924754e4c3818b",
-        "signature": "97a1aa09e0e04a36df53faed012754c3a200ed27b8020f6b8c924754e4c3818b"
+        "version": "bde66186c84f6de1a78ae83ad6192e7362a2e090dab27758662a788922acd2b2",
+        "signature": "bde66186c84f6de1a78ae83ad6192e7362a2e090dab27758662a788922acd2b2"
       },
       "../types/lib/index.d.ts": {
         "version": "890a7b9f3c26aeef94edf002dc96de63877bdbc4aa35d9a3b7ad47c89146d926",
@@ -185,53 +185,57 @@
         "version": "7ccece60f62968f5765383f1f5322ace6937e42c3a2068834ac214fe24f9b7bc",
         "signature": "7ccece60f62968f5765383f1f5322ace6937e42c3a2068834ac214fe24f9b7bc"
       },
-      "../layers/lib/createlayeredobjects.d.ts": {
+      "../core/lib/createlayeredobjects.d.ts": {
         "version": "16729ccc9242877abfe066f7415821b2b14fba5c683d31409653b648bf6f3a20",
         "signature": "16729ccc9242877abfe066f7415821b2b14fba5c683d31409653b648bf6f3a20"
       },
-      "../layers/lib/observable.d.ts": {
+      "../core/lib/observable.d.ts": {
         "version": "04dd98c4a0748fdbd2704bc56fa3f4a3e1d74b8c80d2e40fc07e973101b6aa66",
         "signature": "04dd98c4a0748fdbd2704bc56fa3f4a3e1d74b8c80d2e40fc07e973101b6aa66"
       },
-      "../layers/lib/reflection.d.ts": {
+      "../core/lib/reflection.d.ts": {
         "version": "e231788163623a311973df21abc93d3ce674aa50370080abdfd1dda3da40c455",
         "signature": "e231788163623a311973df21abc93d3ce674aa50370080abdfd1dda3da40c455"
       },
-      "../layers/lib/update.d.ts": {
+      "../core/lib/update.d.ts": {
         "version": "75e42ea2ac224249e7e022f3564f82ce36580458e79034f43f38002ce7093e4b",
         "signature": "75e42ea2ac224249e7e022f3564f82ce36580458e79034f43f38002ce7093e4b"
       },
-      "../layers/lib/constructstatefulobject.d.ts": {
+      "../core/lib/constructstatefulobject.d.ts": {
         "version": "8ab234d2ff0384b09e527a62697a0a771462da9c52097d8fc0294877178435bf",
         "signature": "8ab234d2ff0384b09e527a62697a0a771462da9c52097d8fc0294877178435bf"
       },
-      "../layers/lib/index.d.ts": {
+      "../core/lib/index.d.ts": {
         "version": "79a97cfdeaaf5765540e0eec963744bd82fa5e6b17d428e6c835ef6d21b9648b",
         "signature": "79a97cfdeaaf5765540e0eec963744bd82fa5e6b17d428e6c835ef6d21b9648b"
       },
+      "./src/usereset.ts": {
+        "version": "d4b48d868dac521e51b6b9f24ee7e12b0924d3e7e68f0bdafa52a9b92e8e47ea",
+        "signature": "9cf4eefcc3a68b4b691ede4ac4c80e7750eb48bf9d10305344b55232bd245c7c"
+      },
       "./src/useobjects.ts": {
-        "version": "e1f078fa8040a1c6beb0ce8c53a7ff279bfd619446c6ad1126468451fc586381",
-        "signature": "c77433c4f9cbff1d937cde508e17b9286971cfe6a5fceb25793e099f16232bfd"
+        "version": "ed2a633d62910e84a79ac894654ca1abc8a0882441a2c3fa626cf60995456f24",
+        "signature": "a60f44757be922bbdc3be593c22f1d424bdda6c9c4c3d3ff0be36ee93f358792"
       },
       "./src/useinstances.ts": {
-        "version": "56920900291348ecdc24f3aa09514e456a5cb6a87a76fdd7ed7ef3d289208f22",
-        "signature": "61102473bf601dc255357d4261c7d92d94f74232e72776ca10c52ddabf309167"
+        "version": "79e8f1401b95ede69bce9c2604e30631b43b4411c8267e78c7409184e1ca1227",
+        "signature": "014d9edf0cfcd7fb81f3f6389d254e4eb8279ab6522ee308fe130f9d9d6512e5"
       },
       "./src/useinstance.ts": {
-        "version": "df7a3f45c412e06ba6f5362f215d04d71629af98dc4acc82afc4c92dcb21de27",
-        "signature": "851427a5824b0897ab592df2f0d20e592a570352838d817bfdf8dfd3cf098d8f"
+        "version": "6cf1ebb44be2ba71e1dd356eef25b436a971c945827d54b84cab306c8b634db7",
+        "signature": "d61e962aca8f69754175bc825dfe8c1a8e90887081293a7b852faf03399ee7d2"
       },
-      "./src/usebehavior.ts": {
-        "version": "44dc8efd91302e1dabf0d90f6fe39899c76f4cf3331e087e6f6e2ad0cebc5618",
-        "signature": "51803bd256fbd00caf7a3a2262fdf5d8d1abd285419101874b6f1b999f7cf461"
+      "./src/useobserve.ts": {
+        "version": "6fdde687c74ab91b65501262e2e0d269f6e3b0aaa14a057f061f60eda9ca78b2",
+        "signature": "0bc6ab02f2f6d3a296e355530d5a6bcbc9ab6f417e7ebbecdc59bc68011a44b4"
       },
       "./src/useobject.ts": {
-        "version": "aa153d4d0065b7e5df4eb21bdb282190afd4a9673d74dc4080ebb7886d64448d",
-        "signature": "bcdee9d2738988687c45c7eba9f444cf947cd6060c9ca79cd336f1d272bcc1d4"
+        "version": "3718e8040d44151a9cef5c5b36d70c099e33ba7a483c28f74f5f62379234d9ef",
+        "signature": "e7c29cc4d9bb9e0a1d4019897716cf6b995bab213c29fadfc01bde00998fe6b9"
       },
       "./src/index.ts": {
-        "version": "7dbd6d53eae290f11856a6dfd0f12ae980964dd339cbfbcbe8866f9ac7d28e03",
-        "signature": "9e442124208aa9e8790c4162e6d4a37cd70acefd6f149c4b6cb17b162981283b"
+        "version": "4735ec125ddc5e2017a92943d09be45812c45135dd5f926bb8bc56a63266018b",
+        "signature": "a04088b750b07230bb79ac70fe5c7cf20382ac8e5a5f7d0b7244787c0d52315a"
       },
       "../../node_modules/@types/color-name/index.d.ts": {
         "version": "f0cb4b3ab88193e3e51e9e2622e4c375955003f1f81239d72c5b7a95415dad3e",
@@ -952,7 +956,7 @@
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "./src/useforceupdate.ts": [
+      "./src/useupdate.ts": [
         "../../node_modules/@types/react/index.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.2/fs.d.ts",
@@ -978,56 +982,54 @@
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "../layers/lib/createlayeredobjects.d.ts": [
+      "../core/lib/createlayeredobjects.d.ts": [
         "../types/lib/index.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.2/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "../layers/lib/observable.d.ts": [
+      "../core/lib/observable.d.ts": [
         "../types/lib/index.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.2/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "../layers/lib/reflection.d.ts": [
+      "../core/lib/reflection.d.ts": [
         "../types/lib/index.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.2/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "../layers/lib/update.d.ts": [
+      "../core/lib/update.d.ts": [
         "../types/lib/index.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.2/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "../layers/lib/constructstatefulobject.d.ts": [
+      "../core/lib/constructstatefulobject.d.ts": [
         "../types/lib/index.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.2/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "../layers/lib/index.d.ts": [
+      "../core/lib/index.d.ts": [
         "../../node_modules/symbol-observable/index.d.ts",
-        "../layers/lib/createlayeredobjects.d.ts",
-        "../layers/lib/observable.d.ts",
-        "../layers/lib/reflection.d.ts",
-        "../layers/lib/update.d.ts",
-        "../layers/lib/constructstatefulobject.d.ts",
+        "../core/lib/createlayeredobjects.d.ts",
+        "../core/lib/observable.d.ts",
+        "../core/lib/reflection.d.ts",
+        "../core/lib/update.d.ts",
+        "../core/lib/constructstatefulobject.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.2/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "./src/useobjects.ts": [
-        "./src/useforceupdate.ts",
-        "../layers/lib/index.d.ts",
+      "./src/usereset.ts": [
         "../types/lib/index.d.ts",
         "../../node_modules/@types/react/index.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
@@ -1035,10 +1037,22 @@
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.2/util.d.ts"
       ],
+      "./src/useobjects.ts": [
+        "./src/useupdate.ts",
+        "../core/lib/index.d.ts",
+        "../types/lib/index.d.ts",
+        "../../node_modules/@types/react/index.d.ts",
+        "./src/usereset.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
       "./src/useinstances.ts": [
-        "./src/useforceupdate.ts",
+        "./src/useupdate.ts",
         "../types/lib/index.d.ts",
         "./src/useobjects.ts",
+        "./src/usereset.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.2/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
@@ -1047,16 +1061,19 @@
       "./src/useinstance.ts": [
         "../../node_modules/@types/react/index.d.ts",
         "./src/useinstances.ts",
-        "./src/useforceupdate.ts",
+        "./src/useupdate.ts",
         "../types/lib/index.d.ts",
+        "./src/usereset.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.2/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "./src/usebehavior.ts": [
+      "./src/useobserve.ts": [
         "../../node_modules/@types/react/index.d.ts",
         "../types/lib/index.d.ts",
+        "./src/usereset.ts",
+        "./src/useupdate.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.2/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
@@ -1064,19 +1081,19 @@
       ],
       "./src/useobject.ts": [
         "../../node_modules/@types/react/index.d.ts",
-        "./src/useforceupdate.ts",
+        "./src/useupdate.ts",
         "./src/useobjects.ts",
         "../types/lib/index.d.ts",
+        "./src/usereset.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.2/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.2/util.d.ts"
       ],
       "./src/index.ts": [
-        "./src/useforceupdate.ts",
         "./src/useinstance.ts",
         "./src/useinstances.ts",
-        "./src/usebehavior.ts",
+        "./src/useobserve.ts",
         "./src/useobject.ts",
         "./src/useobjects.ts",
         "../../node_modules/@types/node/fs.d.ts",
@@ -2391,52 +2408,55 @@
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "../layers/lib/createlayeredobjects.d.ts": [
+      "../core/lib/createlayeredobjects.d.ts": [
         "../types/lib/index.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.2/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "../layers/lib/observable.d.ts": [
+      "../core/lib/observable.d.ts": [
         "../types/lib/index.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.2/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "../layers/lib/reflection.d.ts": [
+      "../core/lib/reflection.d.ts": [
         "../types/lib/index.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.2/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "../layers/lib/update.d.ts": [
+      "../core/lib/update.d.ts": [
         "../types/lib/index.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.2/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "../layers/lib/constructstatefulobject.d.ts": [
+      "../core/lib/constructstatefulobject.d.ts": [
         "../types/lib/index.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.2/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "../layers/lib/index.d.ts": [
+      "../core/lib/index.d.ts": [
         "../../node_modules/symbol-observable/index.d.ts",
-        "../layers/lib/createlayeredobjects.d.ts",
-        "../layers/lib/observable.d.ts",
-        "../layers/lib/reflection.d.ts",
-        "../layers/lib/update.d.ts",
-        "../layers/lib/constructstatefulobject.d.ts",
+        "../core/lib/createlayeredobjects.d.ts",
+        "../core/lib/observable.d.ts",
+        "../core/lib/reflection.d.ts",
+        "../core/lib/update.d.ts",
+        "../core/lib/constructstatefulobject.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.2/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./src/usereset.ts": [
+        "../types/lib/index.d.ts"
       ],
       "./src/useobjects.ts": [
         "../types/lib/index.d.ts"
@@ -2447,17 +2467,16 @@
       "./src/useinstance.ts": [
         "../types/lib/index.d.ts"
       ],
-      "./src/usebehavior.ts": [
+      "./src/useobserve.ts": [
         "../types/lib/index.d.ts"
       ],
       "./src/useobject.ts": [
         "../types/lib/index.d.ts"
       ],
       "./src/index.ts": [
-        "./src/useforceupdate.ts",
         "./src/useinstance.ts",
         "./src/useinstances.ts",
-        "./src/usebehavior.ts",
+        "./src/useobserve.ts",
         "./src/useobject.ts",
         "./src/useobjects.ts"
       ],
@@ -3536,20 +3555,22 @@
       "../../node_modules/csstype/index.d.ts",
       "../../node_modules/@types/prop-types/index.d.ts",
       "../../node_modules/@types/react/index.d.ts",
-      "./src/useforceupdate.ts",
+      "./src/useupdate.ts",
       "../types/lib/types.d.ts",
       "../types/lib/index.d.ts",
       "../../node_modules/symbol-observable/index.d.ts",
-      "../layers/lib/createlayeredobjects.d.ts",
-      "../layers/lib/observable.d.ts",
-      "../layers/lib/reflection.d.ts",
-      "../layers/lib/update.d.ts",
-      "../layers/lib/constructstatefulobject.d.ts",
-      "../layers/lib/index.d.ts",
+      "../core/lib/createlayeredobjects.d.ts",
+      "../core/lib/observable.d.ts",
+      "../core/lib/reflection.d.ts",
+      "../core/lib/update.d.ts",
+      "../core/lib/constructstatefulobject.d.ts",
+      "../core/lib/index.d.ts",
+      "./src/usereset.ts",
       "./src/useobjects.ts",
       "./src/useinstances.ts",
       "./src/useinstance.ts",
       "./src/useobject.ts",
+      "./src/index.ts",
       "../../node_modules/@types/color-name/index.d.ts",
       "../../node_modules/immutable/dist/immutable.d.ts",
       "../../node_modules/@types/draft-js/index.d.ts",
@@ -3659,8 +3680,7 @@
       "../../node_modules/@types/styled-components/ts3.7/index.d.ts",
       "../../node_modules/@types/styled-system/index.d.ts",
       "../../node_modules/@types/rebass/index.d.ts",
-      "./src/usebehavior.ts",
-      "./src/index.ts"
+      "./src/useobserve.ts"
     ]
   },
   "version": "3.8.3"

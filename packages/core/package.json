@@ -1,5 +1,5 @@
 {
-  "name": "@objects/layers",
+  "name": "@objects/core",
   "version": "0.1.0",
   "description": "A set of utilities around objects and mutability",
   "main": "lib/index.js",
@@ -9,9 +9,13 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "test": "jest"
   },
   "devDependencies": {
+    "@types/jest": "^26.0.3",
+    "jest": "^26.1.0",
+    "ts-jest": "^26.1.1",
     "typescript": "^3.8.3"
   },
   "dependencies": {

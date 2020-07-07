@@ -16,6 +16,6 @@
   },
   "dependencies": {
     "symbol-observable": "^1.2.0",
-    "@objects/layers": "0.1.0"
+    "@objects/core": "0.1.0"
   }
 }

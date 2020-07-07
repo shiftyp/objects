@@ -1,16 +1,18 @@
-import React from 'react';
+import React from 'react'
 
-import Masonry from 'react-masonry-component';
-import { Button, Flex, Box, Text } from 'rebass';
-import { Checkbox, Label } from '@rebass/forms';
+import { Button, Flex, Box, Text } from 'rebass'
+import { Checkbox, Label } from '@rebass/forms'
+import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
-import { BreedForm } from './BreedForm';
-import { RandomForm } from './RandomForm';
-import { DogImage } from './DogImage';
-import { BreedIndex } from './BreedIndex';
-import { UpdateSection } from './UpdateSection';
+import { BreedForm } from './BreedForm'
+import { RandomForm } from './RandomForm'
+import { DogImage } from './DogImage'
+import { BreedIndex } from './BreedIndex'
+import { UpdateSection } from './UpdateSection'
 
-import { useGameLogic } from '../hooks/useGameLogic';
+import { useGameLogic } from '../hooks/useGameLogic'
+
+import './Game.scss'
 
 export const Game: React.FC = () => {
   const {
@@ -26,19 +28,22 @@ export const Game: React.FC = () => {
     addSearch,
     randomize,
     reset,
-  } = useGameLogic();
+  } = useGameLogic()
 
-  const images: React.ReactNode[] = [];
+  const images: React.ReactNode[] = []
 
-  for (const search of Object.values(searches)) {
+  for (const id of Object.keys(searches).reverse()) {
     images.push(
-      <DogImage
-        key={search.id}
-        terms={search}
-        onClick={createOnImageClick(search)}
-        fadeOut={selectionMode.value && selection.image !== search}
-      />
-    );
+      <CSSTransition key={id} timeout={500} classNames="dog">
+        <DogImage
+          id={id}
+          key={id}
+          terms={searches[id]}
+          onClick={createOnImageClick(id, searches[id])}
+          fadeOut={selectionMode.value && selection.dog?.id !== id}
+        />
+      </CSSTransition>
+    )
   }
 
   return (
@@ -66,7 +71,9 @@ export const Game: React.FC = () => {
         selectionMode={selectionMode}
         onSelect={selectBreed}
       />
-      <Masonry>{images}</Masonry>
+      <Flex flexWrap="wrap">
+        <TransitionGroup component={null}>{images}</TransitionGroup>
+      </Flex>
     </UpdateSection>
-  );
-};
+  )
+}

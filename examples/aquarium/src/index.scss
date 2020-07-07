@@ -7,39 +7,31 @@ html {
   margin: 0;
   font-size: 30px;
   overflow: hidden;
+  min-height: 100vh;
+  min-width: 100vw;
+  height: 100vh;
+  width: 100vw;
 }
 
 #ocean {
   position: absolute;
-  top: 0px;
-  left: 0px;
-  right: 0px;
-  bottom: 0px;
-}
-
-#ocean::before {
-  filter: blur(20px);
-  display: block;
-  content: ' ';
-  position: absolute;
+  padding: 40px;
   top: -40px;
   left: -40px;
-  right: -40px;
-  bottom: -40px;
-  min-height: 100vh;
-  min-width: 100%;
   background-image: url(./assets/hiroko-yoshii-9y7y26C-l4Y-unsplash.jpg);
   background-size: cover;
   background-position: center;
+  filter: blur(20px);
+  width: calc(100vw + 80px);
+  height: calc(100vh + 80px);
+  box-sizing: content-box;
 }
 
 #root {
-  position: relative;
-  display: block;
-  max-height: 100vh;
-  max-width: 100ch;
-  height: 100vh;
-  width: 100ch;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
   perspective: 500px;
   perspective-origin: calc(100vw / 2) calc(100vh / 2);
 }
@@ -81,7 +73,7 @@ html {
 }
 
 .swim {
-  animation: swim 1s infinite;
+  //animation: swim 1s infinite;
   &::before {
     background-image: url(assets/bubbles.gif);
     opacity: 0.5;
@@ -98,7 +90,7 @@ html {
 }
 
 .swim.flipped {
-  animation: swim-flipped 1s infinite;
+  //animation: swim-flipped 1s infinite;
 }
 
 .fish {
@@ -106,6 +98,7 @@ html {
   top: 0;
   left: 0;
   display: flex;
+  flex-direction: column;
   background-color: transparent;
   background-size: cover;
   border: none;
@@ -115,12 +108,30 @@ html {
   line-height: 1.1em;
   font-size: 3rem;
   transition: filter 0.1s;
+  text-align: center;
+  align-items: center;
+
+  .title {
+    font-size: 1rem;
+    display: block;
+    text-align: center;
+    flex-basis: min-content;
+    background-color: transparent;
+    color: white;
+    border: none;
+    opacity: 0.1;
+  }
 
   &:focus {
     outline-style: dashed;
     outline-width: 5px;
     outline-offset: 0.1rem;
     outline-color: rgba(117, 223, 247, 0.18);
+  }
+
+  .title:focus {
+    opacity: 1;
+    z-index: 2010;
   }
 
   span {

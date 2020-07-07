@@ -1,25 +1,26 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { render } from 'react-dom';
-import 'preact/devtools';
+import React from 'react'
+import { render } from 'react-dom'
 
-import { FishComponent } from './FishComponent';
+import { Fish } from './Fish.component'
 
-const rootElement = document.getElementById('root');
+import 'preact/devtools'
+
+const rootElement = document.getElementById('root')
 
 render(
   <>
-    <FishComponent id="medium" speed={6}>
+    <Fish id="medium" speed={6}>
       🐟
-    </FishComponent>
-    <FishComponent id="fast" speed={10}>
+    </Fish>
+    <Fish id="fast" speed={10}>
       🐠
-    </FishComponent>
-    <FishComponent id="slow" speed={2}>
+    </Fish>
+    <Fish id="slow" speed={2}>
       🐡
-    </FishComponent>
-    <FishComponent id="very slow" speed={1}>
+    </Fish>
+    <Fish id="v-slow" speed={1}>
       🐙
-    </FishComponent>
+    </Fish>
   </>,
   rootElement
-);
+)

@@ -2,11 +2,10 @@ import React, { useRef, FormEvent, ChangeEvent } from 'react';
 import { Select } from '@rebass/forms';
 import { Button, Box, Flex } from 'rebass';
 import { BreedTerms } from '../logic/BreedTerms';
-import { BreedLists } from '../logic/BreedLists';
 
 export const BreedForm: React.FC<{
   terms: BreedTerms;
-  lists: BreedLists;
+  lists: any;
   addSearch: () => void;
 }> = ({ terms, lists, addSearch }) => {
   const onListSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -26,10 +25,7 @@ export const BreedForm: React.FC<{
     <Flex as="form" onSubmit={onFormSubmit}>
       <Box mr={10}>
         {!!lists.primaryList?.length && (
-          <Select
-            value={terms.selected || undefined}
-            onChange={onListSelectChange}
-          >
+          <Select value={terms.selected || undefined} onChange={onListSelectChange}>
             {lists.primaryList.map((breed) => (
               <option value={breed} key={breed}>
                 {breed}

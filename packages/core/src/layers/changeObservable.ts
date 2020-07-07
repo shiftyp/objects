@@ -1,4 +1,4 @@
-import { ObservableLayer } from './observable';
+import { ObservableLayer } from './observable'
 import {
   changeObservableSymbol,
   ObjectObservableMap,
@@ -8,11 +8,11 @@ import {
   ChangeObservable,
   ChangeObserverArgs,
   ChangeObserver,
-} from '@objects/types';
+} from '@objects/types'
 
 export class ChangeObservableLayer<Obj> extends ObservableLayer<Obj> {
   constructor(onEnd: (cb: () => void) => void, private symbol: Symbol) {
-    super(onEnd);
+    super(onEnd)
   }
   makeObservableMap = (receiver: Obj) => (
     makeObservable?: (subject: any) => any
@@ -28,7 +28,7 @@ export class ChangeObservableLayer<Obj> extends ObservableLayer<Obj> {
                 if (Object(changes).hasOwnProperty(prop)) {
                   typeof next === 'function'
                     ? next?.(changes[prop])
-                    : next?.next?.(changes[prop]);
+                    : next?.next?.(changes[prop])
                 }
               },
               complete: () => {
@@ -36,39 +36,39 @@ export class ChangeObservableLayer<Obj> extends ObservableLayer<Obj> {
                   ? complete()
                   : typeof next !== 'function'
                   ? next?.complete?.()
-                  : null;
+                  : null
               },
               error: (e: any) => {
                 typeof error === 'function'
                   ? error(e)
                   : typeof next !== 'function'
                   ? next?.error?.(e)
-                  : null;
+                  : null
               },
-            });
+            })
           }
-        );
+        )
 
         if (typeof makeObservable === 'function') {
-          ret = makeObservable(ret);
+          ret = makeObservable(ret)
         }
 
         Object.assign(ret, {
           next: (value: Obj[K]) => {
             if (!this.ended) {
-              receiver[prop] = value;
+              receiver[prop] = value
             }
           },
-        });
+        })
 
-        return ret;
+        return ret
       },
-    });
-  };
+    })
+  }
 
   get(target: Obj, prop: PropertyKey, reciever: Obj) {
     if (prop === this.symbol) {
-      return this.makeObservableMap(reciever);
+      return this.makeObservableMap(reciever)
     }
   }
 }

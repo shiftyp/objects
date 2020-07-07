@@ -1,5 +1,5 @@
 {
-  "name": "object-hooks-test",
+  "name": "objects",
   "version": "0.0.1",
   "main": "index.js",
   "repository": "git@github.com:shiftyp/object-hooks.git",
@@ -7,7 +7,7 @@
   "license": "MIT",
   "private": true,
   "workspaces": [
-    "./packages/*",
-    "./examples/*"
+    "./examples/*",
+    "./packages/*"
   ]
 }

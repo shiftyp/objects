@@ -5,7 +5,7 @@
   "main": "src/index.tsx",
   "scripts": {
     "start": "parcel ./src/index.html",
-    "build": "parcel build ./src/index.html"
+    "build": "NODE_PATH=../../ parcel build ./src/index.html"
   },
   "dependencies": {
     "@types/draft-js": "^0.10.40",
@@ -13,7 +13,8 @@
     "classnames": "^2.2.6",
     "@objects/hooks": "^0.1.0",
     "@objects/operators": "^0.1.0",
-    "preact": "10.4.1",
+    "faker": "4.1.0",
+    "preact": "10.4.5",
     "rxjs": "^6.5.5"
   },
   "devDependencies": {
@@ -23,9 +24,9 @@
     "sass": "1.26.3",
     "typescript": "^3.9.0"
   },
+  "private": true,
   "alias": {
     "react": "preact/compat",
     "react-dom": "preact/compat"
-  },
-  "private": true
+  }
 }
