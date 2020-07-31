@@ -59,7 +59,10 @@ export const Game: React.FC = () => {
         </Box>
         <Flex alignItems="center">
           <Label>
-            <Checkbox checked={randomMode.value} onChange={randomMode.toggle} />
+            <Checkbox
+              checked={randomMode.value}
+              onChange={() => (randomMode.value = !randomMode.value)}
+            />
             <Flex alignItems="center">
               <Text fontFamily="sans-serif">Random Mode</Text>
             </Flex>

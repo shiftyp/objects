@@ -3,9 +3,11 @@ import { Stateful } from '@objects/types'
 
 import { stream } from '@objects/operators'
 import { map } from 'rxjs/operators'
+import { toBreed } from '../utils'
+import { SearchIndex, BreedCounts } from '../types'
 
-export const useBreedCounts = (searches: Stateful<Record<string, string[]>>) => {
-  const [counts, reset] = useObject<Record<string, number>>({}, [searches])
+export const useBreedCounts = (searches: Stateful<SearchIndex>) => {
+  const [counts, reset] = useObject<BreedCounts>({}, [searches])
 
   useObserve(
     () =>
@@ -15,8 +17,8 @@ export const useBreedCounts = (searches: Stateful<Record<string, string[]>>) => 
             const newCounts: Record<string, number | undefined> = {}
 
             for (const key of Object.keys(changes)) {
-              const oldBreed = searches[key]?.join(' ')
-              const newBreed = changes[key]?.join(' ')
+              const oldBreed = toBreed(searches[key])
+              const newBreed = toBreed(changes[key])
 
               if (oldBreed === undefined && newBreed) {
                 newCounts[newBreed] = (counts[newBreed] || 0) + 1

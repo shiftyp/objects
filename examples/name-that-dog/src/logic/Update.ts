@@ -1,41 +1,43 @@
-export class Update<Data = any> {
-  protected _updating: boolean = false;
-  error: Error | null = null;
-  data: Data | null = null;
+import { StatefulBase } from '@objects/operators'
+
+export class Update<Data = any> extends StatefulBase<Update<Data>> {
+  protected _updating: boolean = false
+  error: Error | null = null
+  data: Data | null = null
 
   get updating() {
-    return this._updating;
+    return this._updating
   }
 
-  protected async update(promise: Promise<Data>) {
-    this.begin();
+  async update(promise: Promise<Data>) {
+    this.begin()
 
     try {
-      this.success(await promise);
+      this.success(await promise)
     } catch (error) {
-      this.failure(error);
+      this.failure(error)
     }
 
-    this.finish();
+    this.finish()
   }
 
   protected begin() {
-    this._updating = true;
-    this.error = null;
-    this.data = null;
+    this._updating = true
+    this.error = null
+    this.data = null
   }
 
   protected finish() {
-    this._updating = false;
+    this._updating = false
   }
 
   protected failure(error: Error) {
-    this.error = error;
-    this.data = null;
+    this.error = error
+    this.data = null
   }
 
   protected success(data: Data) {
-    this.data = data;
-    this.error = null;
+    this.data = data
+    this.error = null
   }
 }

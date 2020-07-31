@@ -1,18 +1,21 @@
-import { Stateful } from '@objects/types'
+import { Stable, streamSymbol } from '@objects/types'
 import { useEffect } from 'react'
 
-export const useReset = (reset: () => void, deps?: Stateful<{}>[]) => {
+export const useReset = (
+  reset: () => void,
+  deps?: Stable<{}>[]
+) => {
   useEffect(() => {
     const subscriptions = deps?.map(
-      (dep) =>
+      dep =>
         dep &&
-        dep[Symbol.observable]().subscribe({
+        dep[streamSymbol]().subscribe({
           complete: reset,
         })
     )
 
     return () => {
-      subscriptions?.forEach((sub) => sub.unsubscribe())
+      subscriptions?.forEach(sub => sub && sub.unsubscribe())
     }
   }, deps)
 }

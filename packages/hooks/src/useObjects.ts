@@ -1,18 +1,38 @@
 import { useUpdate } from './useUpdate'
 import { constructStatefulObject } from '@objects/core'
-import { Stateful } from '@objects/types'
+import {
+  Stable,
+  ObjectOrInitalizer,
+  ObjectInitializer,
+} from '@objects/types'
 import { useRef, useMemo, useEffect } from 'react'
 import { useReset } from './useReset'
 
-export const useObjects = <Obj extends Object>(
-  obj: Obj,
-  deps?: Stateful<{}>[]
-): [() => Stateful<Obj>, () => void] => {
-  const [update] = useUpdate()
-  const resetHandlersRef = useRef<Set<() => void>>(useMemo(() => new Set(), []))
+export const useObjects = <Obj>(
+  objOrInitializer: ObjectOrInitalizer<Obj>,
+  deps?: Stable<{}>[],
+  updateOrNull?: (() => void) | null
+): [
+  (
+    override?: ObjectOrInitalizer<Obj>
+  ) => typeof objOrInitializer extends ObjectInitializer<Obj>
+    ? ReturnType<typeof objOrInitializer>
+    : typeof objOrInitializer extends Stable<Obj>
+    ? Stable<Obj>
+    : Stable<Obj>,
+  () => void
+] => {
+  const [update] =
+    updateOrNull === undefined || updateOrNull === null
+      ? useUpdate()
+      : [updateOrNull]
+
+  const resetHandlersRef = useRef<Set<() => void>>(
+    useMemo(() => new Set(), [])
+  )
 
   const reset = () => {
-    resetHandlersRef.current.forEach((reset) => reset())
+    resetHandlersRef.current.forEach(reset => reset())
     resetHandlersRef.current.clear()
   }
 
@@ -20,9 +40,15 @@ export const useObjects = <Obj extends Object>(
     resetHandlersRef.current.add(handler)
   }
 
-  const construct = constructStatefulObject(obj, update, addResetHandler)
+  const construct = constructStatefulObject(
+    objOrInitializer,
+    reset,
+    addResetHandler,
+    update
+  )
 
   useReset(reset, deps)
 
+  // @ts-ignore
   return [construct, reset]
 }

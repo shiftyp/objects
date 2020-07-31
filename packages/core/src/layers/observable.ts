@@ -1,26 +1,31 @@
 import {
   ObjectLayer,
   ObjectObserver,
-  ObjectObservableMap,
   ObjectObserverArgs,
 } from '@objects/types'
 
 export class ObservableLayer<Obj extends Object>
-  implements Pick<ObjectLayer<Obj>, 'set' | 'get' | 'deleteProperty'> {
+  implements
+    Pick<ObjectLayer<Obj>, 'set' | 'get' | 'deleteProperty'> {
   protected observers = new Set<ObjectObserver<Obj>>()
   protected ended = false
 
-  constructor(onEnd: (cb: () => void) => void) {
+  constructor(
+    onEnd: (cb: () => void) => void,
+    protected symbol: Symbol
+  ) {
     onEnd(this.onEnd)
   }
 
   private onEnd = () => {
     this.ended = true
-    this.observers.forEach((observer) => observer.complete?.())
+    this.observers.forEach(observer => observer.complete?.())
     this.observers.clear()
   }
 
-  protected subscribe = (...[next, error, complete]: ObjectObserverArgs<Obj>) => {
+  protected subscribe = (
+    ...[next, error, complete]: ObjectObserverArgs<Obj>
+  ) => {
     let observer: ObjectObserver<Obj>
 
     if (next !== null && typeof next !== 'function') {
@@ -40,11 +45,16 @@ export class ObservableLayer<Obj extends Object>
     subscribe: ObservableLayer<Obj>['subscribe']
   ) => ({
     subscribe: subscribe,
-    [Symbol.observable]: () => ObservableLayer.makeObservable(subscribe),
+    [Symbol.observable]: () =>
+      ObservableLayer.makeObservable(subscribe),
   })
 
-  protected runObservers(prop: keyof Obj, value: any, instance: Obj) {
-    this.observers.forEach((observer) =>
+  protected runObservers(
+    prop: keyof Obj,
+    value: any,
+    instance: Obj
+  ) {
+    this.observers.forEach(observer =>
       observer.next?.({ [prop as keyof Obj]: value } as Record<
         keyof Obj,
         Obj[keyof Obj]
@@ -59,7 +69,7 @@ export class ObservableLayer<Obj extends Object>
   }
 
   get(_: Obj, prop: PropertyKey, receiver: any): any {
-    if (prop === Symbol.observable) {
+    if (prop === this.symbol) {
       return (makeObservable?: (subject: any) => any) => {
         let base = ObservableLayer.makeObservable(this.subscribe)
 
@@ -69,11 +79,11 @@ export class ObservableLayer<Obj extends Object>
 
         return Object.assign(base, {
           next: (changes: Partial<Obj>) => {
-            for (const key of Object.keys(changes) as (keyof Obj)[]) {
-              if (changes[key] !== undefined) {
+            if (!this.ended) {
+              for (const key of Object.keys(
+                changes
+              ) as (keyof Obj)[]) {
                 receiver[key] = changes[key]
-              } else {
-                delete receiver[key]
               }
             }
           },

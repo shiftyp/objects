@@ -1,47 +1,46 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from 'react'
 
-import { Text, Link, Button, Card } from 'rebass';
+import { Text, Link, Button, Card } from 'rebass'
 
-import { useInstance } from '@objects/hooks';
+import { useInstance } from '@objects/hooks'
 
-import { ArticleFetch } from '../logic/ArticleFetch';
-import { Mode } from '../logic/Mode';
+import { Mode } from '../types'
+import { useArticleLink } from '../hooks/useArticleLink'
 
 export const BreedLink: React.FC<{
-  breed: string;
-  count: number;
-  buttonMode?: Mode;
-  onClick: () => void;
+  breed: string
+  count: number
+  buttonMode?: Mode
+  onClick: () => void
 }> = ({ breed, count, buttonMode, onClick }) => {
-  const [article] = useInstance(ArticleFetch);
+  const { article } = useArticleLink(breed)
 
-  useEffect(() => {
-    article.load(breed);
-  }, [article, breed]);
+  if (count > 0) {
+    const text =
+      article.data?.href && !buttonMode?.value ? (
+        <Text>
+          <Link
+            href={article.data.href}
+            title={`${breed} on Wikipedia`}
+            target="_blank"
+          >
+            {article.data?.title || breed}
+          </Link>
+          : {count}
+        </Text>
+      ) : (
+        <Text>
+          {article.data?.title || breed}: {count}
+        </Text>
+      )
 
-  const text =
-    article.data?.href && !buttonMode?.value ? (
-      <Text>
-        <Link
-          href={article.data.href}
-          title={`${breed} on Wikipedia`}
-          target="_blank"
-        >
-          {article.data?.title || breed}
-        </Link>
-        : {count}
-      </Text>
+    return buttonMode?.value ? (
+      <Button margin={10} variant="outline" onClick={onClick}>
+        {text}
+      </Button>
     ) : (
-      <Text>
-        {article.data?.title || breed}: {count}
-      </Text>
-    );
-
-  return buttonMode?.value ? (
-    <Button margin={10} variant="outline" onClick={onClick}>
-      {text}
-    </Button>
-  ) : (
-    <Card margin={10}>{text}</Card>
-  );
-};
+      <Card margin={10}>{text}</Card>
+    )
+  }
+  return null
+}

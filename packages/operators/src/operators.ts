@@ -1,13 +1,18 @@
 import { from, Observable, Scheduler, NextObserver } from 'rxjs'
 
 import {
-  changeObservableSymbol,
-  changedObservableSymbol,
-  StatefulSymbols,
+  changeSymbol,
+  changedSymbol,
+  StableSymbols,
   ChangeObserver,
+  streamedSymbol,
+  streamSymbol,
 } from '@objects/types'
 
-type ChangeObserverRx<Obj, K extends keyof Obj> = ChangeObserver<Obj, K> &
+type ChangeObserverRx<Obj, K extends keyof Obj> = ChangeObserver<
+  Obj,
+  K
+> &
   NextObserver<Obj[K]>
 
 type ChangeObservableMapRx<Obj> = {
@@ -15,33 +20,42 @@ type ChangeObservableMapRx<Obj> = {
 }
 
 export const changes = <Obj>(
-  obj: StatefulSymbols<Obj>,
+  obj: StableSymbols<Obj>,
   scheduler?: Scheduler
 ): ChangeObservableMapRx<Obj> => {
   // @ts-ignore
-  return obj[changeObservableSymbol]((obs: any) =>
+  return obj[changeSymbol]((obs: any) =>
     scheduler ? from(obs, scheduler) : from(obs)
   )
 }
 
 export const afterChanges = <Obj>(
-  obj: StatefulSymbols<Obj>,
+  obj: StableSymbols<Obj>,
   scheduler?: Scheduler
 ): ChangeObservableMapRx<Obj> => {
   // @ts-ignore
-  return obj[changedObservableSymbol]((obs: any) =>
+  return obj[changedSymbol]((obs: any) =>
     scheduler ? from(obs, scheduler) : from(obs)
   )
 }
 
 export const stream = <Obj>(
-  obj: StatefulSymbols<Obj>,
+  obj: StableSymbols<Obj>,
   scheduler?: Scheduler
 ): any => {
-  return obj[Symbol.observable]((obs: any) =>
+  return obj[streamSymbol]((obs: any) =>
     scheduler ? from(obs, scheduler) : from(obs)
   )
 }
 
-export interface StatefulBase<Obj> extends StatefulSymbols<Obj> {}
+export const afterStream = <Obj>(
+  obj: StableSymbols<Obj>,
+  scheduler?: Scheduler
+): any => {
+  return obj[streamedSymbol]((obs: any) =>
+    scheduler ? from(obs, scheduler) : from(obs)
+  )
+}
+
+export interface StatefulBase<Obj> extends StableSymbols<Obj> {}
 export class StatefulBase<Obj> {}

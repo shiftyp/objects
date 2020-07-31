@@ -1,16 +1,19 @@
-import { useEffect } from 'react'
 import { useInstance } from '@objects/hooks'
+import { useEffect, useMemo } from 'react'
+import { ApiFetch } from '../logic/ApiFetch'
+import { makeDogApiOptions, toPath } from '../utils'
+import { BreedTermsList } from '../types'
 
-import { ImageSearch } from '../logic/ImageSearch'
-
-export const useImageSearch = (terms: string[], id: string) => {
-  const [imageSearch] = useInstance(ImageSearch, [], terms, id)
+export const useImageSearch = (terms: BreedTermsList) => {
+  const apiOptions = useMemo(() => makeDogApiOptions<string>(), [])
+  const [search] = useInstance(ApiFetch, [], apiOptions)
+  const path = toPath(terms)
 
   useEffect(() => {
-    imageSearch.search()
-  }, [imageSearch])
+    if (path) {
+      search.fetch(`/breed/${path}/images/random`)
+    }
+  }, [search, path])
 
-  return {
-    imageSearch,
-  }
+  return { search }
 }

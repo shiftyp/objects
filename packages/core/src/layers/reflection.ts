@@ -1,35 +1,41 @@
 import { ObjectLayer } from '@objects/types'
 
-export const reflectMethods: (keyof typeof Reflect)[] = [
-  'set',
-  'get',
-  'getOwnPropertyDescriptor',
-  'getPrototypeOf',
-  'setPrototypeOf',
-  'defineProperty',
-  'deleteProperty',
-  'enumerate',
-  'isExtensible',
-  'ownKeys',
-  'apply',
-  'construct',
-  'has',
-  'isExtensible',
-  'preventExtensions',
-]
-
-export interface ReflectionLayer<Obj extends Object> extends ObjectLayer<Obj> {}
+export interface ReflectionLayer<Obj extends Object>
+  extends ObjectLayer<Obj> {}
 export class ReflectionLayer<Obj extends Object> {
+  static reflectMethods: (keyof typeof Reflect)[] = [
+    'set',
+    'get',
+    'getOwnPropertyDescriptor',
+    'getPrototypeOf',
+    'setPrototypeOf',
+    'defineProperty',
+    'deleteProperty',
+    'enumerate',
+    'isExtensible',
+    'ownKeys',
+    'apply',
+    'construct',
+    'has',
+    'isExtensible',
+    'preventExtensions',
+  ]
+
   ended = false
 
-  constructor(reflect: typeof Reflect, onEnd: (cb: () => void) => void) {
+  constructor(
+    reflect: typeof Reflect,
+    onEnd: (cb: () => void) => void
+  ) {
     onEnd(this.onEnd)
 
-    reflectMethods.forEach((key) => {
+    ReflectionLayer.reflectMethods.forEach(key => {
       // @ts-ignore
       this[key] = (...args: any) => {
         if (this.ended) {
-          throw new Error(`Attempted to reflect.${key} after reset`)
+          throw new Error(
+            `Attempted to reflect.${key} after reset`
+          )
         }
         if (key === 'set') {
           // Ignore the receiver prop for set calls

@@ -1,22 +1,35 @@
-import Symbol_observable from 'symbol-observable'
+import 'symbol-observable'
 
-export const changeObservableSymbol = Symbol('ChangeObservable')
+export const streamSymbol = Symbol('stream')
 
-export const changedObservableSymbol = Symbol('ChangedObservable')
+export const changeSymbol = Symbol('change')
 
-export interface ObjectObserver<Obj, Key extends keyof Obj = keyof Obj> {
+export const changedSymbol = Symbol('changed')
+
+export const streamedSymbol = Symbol('streamed')
+
+export interface ObjectObserver<
+  Obj,
+  Key extends keyof Obj = keyof Obj
+> {
   next?: ((changes: Record<Key, Obj[Key]>) => void) | null
   error?: ((e: any) => void) | null
   complete?: (() => void) | null
 }
 
-export interface ChangeObserver<Obj, Key extends keyof Obj = keyof Obj> {
+export interface ChangeObserver<
+  Obj,
+  Key extends keyof Obj = keyof Obj
+> {
   next?: ((changes: Obj[Key]) => void) | null
   error?: ((e: any) => void) | null
   complete?: (() => void) | null
 }
 
-export type ObjectObserverArgs<Obj, Key extends keyof Obj = keyof Obj> =
+export type ObjectObserverArgs<
+  Obj,
+  Key extends keyof Obj = keyof Obj
+> =
   | [ObjectObserver<Obj, Key>?]
   | [
       ObjectObserver<Obj, Key>['next']?,
@@ -24,7 +37,10 @@ export type ObjectObserverArgs<Obj, Key extends keyof Obj = keyof Obj> =
       ObjectObserver<Obj, Key>['complete']?
     ]
 
-export type ChangeObserverArgs<Obj, Key extends keyof Obj = keyof Obj> =
+export type ChangeObserverArgs<
+  Obj,
+  Key extends keyof Obj = keyof Obj
+> =
   | [ChangeObserver<Obj, Key>?]
   | [
       ChangeObserver<Obj, Key>['next']?,
@@ -34,36 +50,55 @@ export type ChangeObserverArgs<Obj, Key extends keyof Obj = keyof Obj> =
 
 export type Subscription = { unsubscribe: () => void }
 
-export interface ObjectObservable<Obj, Key extends keyof Obj = keyof Obj> {
-  subscribe: (...args: ObjectObserverArgs<Obj, Key>) => Subscription
+export interface ObjectObservable<
+  Obj,
+  Key extends keyof Obj = keyof Obj
+> {
+  subscribe: (
+    ...args: ObjectObserverArgs<Obj, Key>
+  ) => Subscription
   [Symbol.observable](
     makeObservable?: (subject: any) => any
   ): ObjectObservable<Obj, Key>
 }
 
-export interface ChangeObservable<Obj, Key extends keyof Obj = keyof Obj> {
-  subscribe: (...args: ChangeObserverArgs<Obj, Key>) => Subscription
+export interface ChangeObservable<
+  Obj,
+  Key extends keyof Obj = keyof Obj
+> {
+  subscribe: (
+    ...args: ChangeObserverArgs<Obj, Key>
+  ) => Subscription
   [Symbol.observable](
     makeObservable?: (subject: any) => any
   ): ChangeObservable<Obj, Key>
 }
 
-export type ObjectObservableMap<Obj> = {
-  [K in keyof Obj]: ObjectObservable<Obj, K>
+export type Changes<Obj> = {
+  [K in keyof Obj]: ChangeObserver<Obj, K> &
+    ChangeObservable<Obj, K>
 }
 
-export type ChangeObservableMap<Obj> = {
-  [K in keyof Obj]: ChangeObserver<Obj, K> & ChangeObservable<Obj, K>
-}
-
-export interface StatefulSymbols<Obj> {
-  [Symbol.observable](makeObservable?: (subject: any) => any): ObjectObservable<Obj>
-  [changeObservableSymbol](
+export interface StableSymbols<Obj> {
+  [streamSymbol](
     makeObservable?: (subject: any) => any
-  ): ChangeObservableMap<Obj>
+  ): ObjectObservable<Obj>
+  [streamedSymbol](
+    makeObservable?: (subject: any) => any
+  ): ObjectObservable<Obj>
+  [changeSymbol](
+    makeObservable?: (subject: any) => any
+  ): Changes<Obj>
+  [changedSymbol](
+    makeObservable?: (subject: any) => any
+  ): Changes<Obj>
 }
 
-export type Stateful<Obj> = Obj & StatefulSymbols<Obj>
+export type Stable<Obj> = Obj & StableSymbols<Obj>
+
+export interface LayerContext {
+  stopLayerPropagation: () => {}
+}
 
 export interface ObjectLayer<Obj extends Object> {
   getPrototypeOf: (target: Obj) => Obj | null | void
@@ -76,7 +111,12 @@ export interface ObjectLayer<Obj extends Object> {
   ) => PropertyDescriptor | void
   has: (target: Obj, p: PropertyKey) => boolean | void
   get: (target: Obj, p: PropertyKey, receiver: any) => any | void
-  set: (target: Obj, p: PropertyKey, value: any, receiver: any) => boolean | void
+  set: (
+    target: Obj,
+    p: PropertyKey,
+    value: any,
+    receiver: any
+  ) => boolean | void
   deleteProperty: (target: Obj, p: PropertyKey) => boolean | void
   defineProperty: (
     target: Obj,
@@ -85,6 +125,29 @@ export interface ObjectLayer<Obj extends Object> {
   ) => boolean | void
   enumerate: (target: Obj) => PropertyKey[] | void
   ownKeys: (target: Obj) => PropertyKey[] | void
-  apply: (target: Obj, thisArg: any, argArray?: any) => any | void
-  construct: (target: Obj, argArray: any, newTarget?: any) => object | void
+  apply: (
+    target: Obj,
+    thisArg: any,
+    argArray?: any
+  ) => any | void
+  construct: (
+    target: Obj,
+    argArray: any,
+    newTarget?: any
+  ) => object | void
 }
+
+export type Stabilize = <Other>(
+  other: ObjectOrInitalizer<Other>
+) => typeof other extends ObjectInitializer<Other>
+  ? ReturnType<typeof other>
+  : Stable<Other>
+
+export type ObjectInitializer<Obj> = (
+  stablilize?: Stabilize
+) => Obj | Stable<Obj>
+
+export type ObjectOrInitalizer<Obj> =
+  | Obj
+  | ObjectInitializer<Obj>
+  | Stable<Obj>

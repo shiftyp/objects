@@ -1,20 +1,16 @@
-import { Update } from './Update';
+import { Update } from './Update'
+import { ApiOptions } from '../types'
 
-interface ApiResponse<Message> {
-  message: Message;
-}
+export class ApiFetch<Data, Response> extends Update<Data> {
+  constructor(protected options: ApiOptions<Data, Response>) {
+    super()
+  }
 
-export abstract class ApiFetch<Data, Response> extends Update<Data> {
-  abstract readonly apiBase: string;
-  abstract readonly apiSuffix?: string;
-
-  abstract transform: (response: Response) => Data;
-
-  protected fetch(path: string, info?: RequestInit) {
-    return this.update(
-      fetch(`${this.apiBase}${path}${this.apiSuffix || ''}`, info)
+  async fetch(path: string, info?: RequestInit) {
+    return await this.update(
+      fetch(`${this.options.apiBase}${path}${this.options.apiSuffix || ''}`, info)
         .then<Response>((resp) => resp.json())
-        .then<Data>((resp) => this.transform(resp))
-    );
+        .then<Data>((resp) => this.options.transform(resp))
+    )
   }
 }

@@ -1,26 +1,21 @@
 import React from 'react'
 import { render } from 'react-dom'
 
-import { Fish } from './Fish.component'
+import { Ocean } from './Ocean'
 
-import 'preact/devtools'
+import './index.scss'
 
 const rootElement = document.getElementById('root')
 
 render(
-  <>
-    <Fish id="medium" speed={6}>
-      🐟
-    </Fish>
-    <Fish id="fast" speed={10}>
-      🐠
-    </Fish>
-    <Fish id="slow" speed={2}>
-      🐡
-    </Fish>
-    <Fish id="v-slow" speed={1}>
-      🐙
-    </Fish>
-  </>,
+  <Ocean
+    kinds={{
+      [`🐠`]: 20,
+      [`🐟`]: 15,
+      [`🐡`]: 10,
+      [`🦑`]: 8,
+      [`🐙`]: 5,
+    }}
+  />,
   rootElement
 )

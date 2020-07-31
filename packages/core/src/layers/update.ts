@@ -4,7 +4,10 @@ export class UpdateLayer<Obj>
   implements Pick<ObjectLayer<Obj>, 'set' | 'deleteProperty'> {
   ended = false
 
-  constructor(private update: () => void, onEnd: (cb: () => void) => void) {
+  constructor(
+    onEnd: (cb: () => void) => void,
+    protected update?: () => void
+  ) {
     onEnd(this.onEnd)
   }
 
@@ -14,13 +17,13 @@ export class UpdateLayer<Obj>
 
   set() {
     if (!this.ended) {
-      this.update()
+      this.update?.()
     }
   }
 
   deleteProperty() {
     if (!this.ended) {
-      this.update()
+      this.update?.()
     }
   }
 }

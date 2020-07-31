@@ -2,7 +2,6 @@ import { ReflectionLayer } from './reflection'
 
 describe('Reflection', () => {
   const makeReflection = (
-    update = jest.fn(),
     onEnd = jest.fn(),
     reflect = {
       set: jest.fn(),
@@ -311,6 +310,251 @@ describe('Reflection', () => {
         'Attempted to reflect.deleteProperty after reset'
       )
       expect(reflect.deleteProperty).toHaveBeenCalledTimes(0)
+    })
+  })
+
+  describe('#enumerate', () => {
+    it('should call reflect.enumerate passing arguments', () => {
+      const { layer, reflect } = makeReflection()
+
+      type Args = Parameters<typeof Reflect['enumerate']>
+
+      const args: Args = [{}]
+
+      layer.enumerate(...args)
+
+      expect(reflect.enumerate).toHaveBeenCalledTimes(1)
+
+      expect(reflect.enumerate.mock.calls[0]).toMatchObject(args)
+    })
+
+    it('should not call reflect.enumerate after end', () => {
+      const { layer, reflect, onEnd } = makeReflection()
+
+      type Args = Parameters<typeof Reflect['enumerate']>
+
+      const args: Args = [{}]
+
+      const [endCb] = onEnd.mock.calls[0]
+
+      endCb()
+
+      const callEnumerate = () => layer.enumerate(...args)
+
+      expect(callEnumerate).toThrowError(
+        'Attempted to reflect.enumerate after reset'
+      )
+      expect(reflect.enumerate).toHaveBeenCalledTimes(0)
+    })
+  })
+
+  describe('#isExtensible', () => {
+    it('should call reflect.isExtensible passing arguments', () => {
+      const { layer, reflect } = makeReflection()
+
+      type Args = Parameters<typeof Reflect['isExtensible']>
+
+      const args: Args = [{}]
+
+      layer.isExtensible(...args)
+
+      expect(reflect.isExtensible).toHaveBeenCalledTimes(1)
+
+      expect(reflect.isExtensible.mock.calls[0]).toMatchObject(args)
+    })
+
+    it('should not call reflect.isExtensible after end', () => {
+      const { layer, reflect, onEnd } = makeReflection()
+
+      type Args = Parameters<typeof Reflect['isExtensible']>
+
+      const args: Args = [{}]
+
+      const [endCb] = onEnd.mock.calls[0]
+
+      endCb()
+
+      const callIsExtensible = () => layer.isExtensible(...args)
+
+      expect(callIsExtensible).toThrowError(
+        'Attempted to reflect.isExtensible after reset'
+      )
+      expect(reflect.isExtensible).toHaveBeenCalledTimes(0)
+    })
+  })
+
+  describe('#ownKeys', () => {
+    it('should call reflect.ownKeys passing arguments', () => {
+      const { layer, reflect } = makeReflection()
+
+      type Args = Parameters<typeof Reflect['ownKeys']>
+
+      const args: Args = [{}]
+
+      layer.ownKeys(...args)
+
+      expect(reflect.ownKeys).toHaveBeenCalledTimes(1)
+
+      expect(reflect.ownKeys.mock.calls[0]).toMatchObject(args)
+    })
+
+    it('should not call reflect.ownKeys after end', () => {
+      const { layer, reflect, onEnd } = makeReflection()
+
+      type Args = Parameters<typeof Reflect['ownKeys']>
+
+      const args: Args = [{}]
+
+      const [endCb] = onEnd.mock.calls[0]
+
+      endCb()
+
+      const callOwnKeys = () => layer.ownKeys(...args)
+
+      expect(callOwnKeys).toThrowError('Attempted to reflect.ownKeys after reset')
+      expect(reflect.ownKeys).toHaveBeenCalledTimes(0)
+    })
+  })
+
+  describe('#apply', () => {
+    it('should call reflect.apply passing arguments', () => {
+      const { layer, reflect } = makeReflection()
+
+      type Args = Parameters<typeof Reflect['apply']>
+
+      const args: Args = [() => {}, {}, [{}, 1, 'string', true]]
+
+      layer.apply(...args)
+
+      expect(reflect.apply).toHaveBeenCalledTimes(1)
+
+      expect(reflect.apply.mock.calls[0]).toMatchObject(args)
+    })
+
+    it('should not call reflect.apply after end', () => {
+      const { layer, reflect, onEnd } = makeReflection()
+
+      type Args = Parameters<typeof Reflect['apply']>
+
+      const args: Args = [() => {}, {}, [{}, 1, 'string', true]]
+
+      const [endCb] = onEnd.mock.calls[0]
+
+      endCb()
+
+      const callApply = () => layer.apply(...args)
+
+      expect(callApply).toThrowError('Attempted to reflect.apply after reset')
+      expect(reflect.apply).toHaveBeenCalledTimes(0)
+    })
+  })
+
+  describe('#construct', () => {
+    it('should call reflect.construct passing arguments', () => {
+      const { layer, reflect } = makeReflection()
+
+      type Args = Parameters<typeof Reflect['construct']>
+
+      const args: Args = [() => {}, [{}, 1, 'string', true], {}]
+
+      layer.construct(...args)
+
+      expect(reflect.construct).toHaveBeenCalledTimes(1)
+
+      expect(reflect.construct.mock.calls[0]).toMatchObject(args)
+    })
+
+    it('should not call reflect.construct after end', () => {
+      const { layer, reflect, onEnd } = makeReflection()
+
+      type Args = Parameters<typeof Reflect['construct']>
+
+      const args: Args = [() => {}, [{}, 1, 'string', true], {}]
+
+      const [endCb] = onEnd.mock.calls[0]
+
+      endCb()
+
+      const callConstruct = () => layer.construct(...args)
+
+      expect(callConstruct).toThrowError(
+        'Attempted to reflect.construct after reset'
+      )
+      expect(reflect.construct).toHaveBeenCalledTimes(0)
+    })
+  })
+
+  describe('#has', () => {
+    it('should call reflect.has passing arguments', () => {
+      const { layer, reflect } = makeReflection()
+
+      type Args = Parameters<typeof Reflect['has']>
+
+      const stringArgs: Args = [{}, 'foo']
+      const numberArgs: Args = [{}, 1]
+      const symbolArgs: Args = [{}, Symbol('symbol')]
+
+      layer.has(...stringArgs)
+      layer.has(...numberArgs)
+      layer.has(...symbolArgs)
+
+      expect(reflect.has).toHaveBeenCalledTimes(3)
+
+      expect(reflect.has.mock.calls[0]).toMatchObject(stringArgs)
+      expect(reflect.has.mock.calls[1]).toMatchObject(numberArgs)
+      expect(reflect.has.mock.calls[2]).toMatchObject(symbolArgs)
+    })
+
+    it('should not call reflect.has after end', () => {
+      const { layer, reflect, onEnd } = makeReflection()
+
+      type Args = Parameters<typeof Reflect['has']>
+
+      const args: Args = [{}, 'foo']
+
+      const [endCb] = onEnd.mock.calls[0]
+
+      endCb()
+
+      const callHas = () => layer.has(...args)
+
+      expect(callHas).toThrowError('Attempted to reflect.has after reset')
+      expect(reflect.has).toHaveBeenCalledTimes(0)
+    })
+  })
+
+  describe('#preventExtensions', () => {
+    it('should call reflect.preventExtensions passing arguments', () => {
+      const { layer, reflect } = makeReflection()
+
+      type Args = Parameters<typeof Reflect['preventExtensions']>
+
+      const args: Args = [{}]
+
+      layer.preventExtensions(...args)
+
+      expect(reflect.preventExtensions).toHaveBeenCalledTimes(1)
+
+      expect(reflect.preventExtensions.mock.calls[0]).toMatchObject(args)
+    })
+
+    it('should not call reflect.preventExtensions after end', () => {
+      const { layer, reflect, onEnd } = makeReflection()
+
+      type Args = Parameters<typeof Reflect['preventExtensions']>
+
+      const args: Args = [{}]
+
+      const [endCb] = onEnd.mock.calls[0]
+
+      endCb()
+
+      const callPreventExtensions = () => layer.preventExtensions(...args)
+
+      expect(callPreventExtensions).toThrowError(
+        'Attempted to reflect.preventExtensions after reset'
+      )
+      expect(reflect.preventExtensions).toHaveBeenCalledTimes(0)
     })
   })
 })

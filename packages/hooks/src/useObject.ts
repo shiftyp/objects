@@ -1,31 +1,46 @@
-import { useRef, useMemo } from 'react'
+import { useRef, useMemo, MutableRefObject } from 'react'
 import { useUpdate } from './useUpdate'
 import { useObjects } from './useObjects'
-import { Stateful } from '@objects/types'
+import {
+  Stable,
+  ObjectOrInitalizer,
+  ObjectInitializer,
+} from '@objects/types'
 import { useReset } from './useReset'
 
-export const useObject = <Obj extends Object>(
-  obj: Obj,
-  deps?: Stateful<{}>[]
-): [Stateful<Obj>, () => void] => {
-  const instance = useRef<Obj>()
-  const [reset, resets] = useUpdate()
+export const useObject = <Obj>(
+  objOrInitializer: ObjectOrInitalizer<Obj>,
+  deps?: Stable<{}>[],
+  updateOrNull?: (() => void) | null
+): [
+  typeof objOrInitializer extends ObjectInitializer<Obj>
+    ? ReturnType<typeof objOrInitializer>
+    : typeof objOrInitializer extends Stable<Obj>
+    ? Stable<Obj>
+    : Stable<Obj>,
+  () => void
+] => {
+  const [update] = updateOrNull === null ? [null] : useUpdate()
 
-  useMemo(() => {
-    instance.current = obj
-  }, [resets])
+  const [constructor, resetInstances] = useObjects(
+    objOrInitializer,
+    deps,
+    update
+  )
 
-  const [constructor, resetInstance] = useObjects(instance.current!, deps)
+  const [doRecreateInstance, recreateInstance] = useUpdate()
 
-  const proxy = useMemo(() => constructor(), [resets])
+  const reset = () => {
+    resetInstances()
+    doRecreateInstance()
+  }
 
-  useReset(reset, deps)
+  const instance = useMemo(() => constructor(), [
+    recreateInstance,
+  ])
 
-  return [
-    proxy as Stateful<Obj>,
-    () => {
-      resetInstance()
-      reset()
-    },
-  ]
+  useReset(doRecreateInstance, deps)
+
+  // @ts-ignore
+  return [instance, reset]
 }

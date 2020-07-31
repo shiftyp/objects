@@ -1,7 +1,7 @@
 {
   "name": "@objects/core",
   "version": "0.1.0",
-  "description": "A set of utilities around objects and mutability",
+  "description": "Observable objects",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "repository": "https://github.com/shiftyp/objects.git",

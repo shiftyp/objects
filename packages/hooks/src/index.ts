@@ -1,5 +1,3 @@
-export * from './useInstance'
-export * from './useInstances'
-export * from './useObserve'
 export * from './useObject'
 export * from './useObjects'
+export * from './useObserve'

@@ -4,6 +4,7 @@ import { Image, Box } from 'rebass'
 
 import { useImageSearch } from '../hooks/useImageSearch'
 import { UpdateSection } from './UpdateSection'
+import { toBreed } from '../utils'
 
 export const DogImage: React.FC<{
   id: string
@@ -11,12 +12,12 @@ export const DogImage: React.FC<{
   onClick: (e: React.MouseEvent) => void
   fadeOut: boolean
 }> = ({ id, terms, onClick, fadeOut }) => {
-  const { imageSearch } = useImageSearch(terms, id)
+  const { search } = useImageSearch(terms)
 
   return (
     <Box width={200} margin={10} style={{ position: 'relative' }} minHeight={200}>
-      <UpdateSection updates={[imageSearch]}>
-        {imageSearch.data ? (
+      <UpdateSection updates={[search]}>
+        {search.data ? (
           <Image
             style={{
               maxWidth: 200,
@@ -24,8 +25,8 @@ export const DogImage: React.FC<{
               cursor: 'pointer',
             }}
             onClick={onClick}
-            src={imageSearch.data}
-            alt={imageSearch.terms.join(' ') || ''}
+            src={search.data}
+            alt={toBreed(terms) || undefined}
           />
         ) : null}
       </UpdateSection>

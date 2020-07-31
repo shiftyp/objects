@@ -3,14 +3,14 @@ import { useSearchTerms } from './useSearchTerms'
 
 import { useGameModes } from './useGameModes'
 import { useGameSelection } from './useGameSelection'
-import { useSearches } from './useSearches'
+import { useSearchIndex } from './useSearchIndex'
 
 export const useGameLogic = () => {
   const { randomMode, selectionMode } = useGameModes()
-  const { selection } = useGameSelection(selectionMode)
   const { collection } = useBreeds()
+  const { selection } = useGameSelection(selectionMode)
   const { terms, lists, randomize } = useSearchTerms(collection, randomMode)
-  const { searches, addSearch, reset } = useSearches(terms)
+  const { searches, addSearch, reset } = useSearchIndex(terms)
 
   const selectBreed = (breed: string) => {
     if (selection.dog && selection.dog.terms.join(' ') === breed) {

@@ -2,7 +2,7 @@ import { Stateful } from '@objects/types'
 import { useObserve, useObject } from '@objects/hooks'
 import { changes } from '@objects/operators'
 import { map } from 'rxjs/operators'
-import { Mode } from '../logic/Mode'
+import { Mode } from '../types'
 
 interface Selection {
   terms: string[]

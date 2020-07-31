@@ -1,27 +1,25 @@
 import { useCallback, useEffect } from 'react'
-import { useInstance, useObserve, useObject } from '@objects/hooks'
+import { useInstance, useObserve, useObject, useObjects } from '@objects/hooks'
 import { Stateful } from '@objects/types'
 import { changes, afterChanges } from '@objects/operators'
 import { map, take, filter } from 'rxjs/operators'
 
-import { BreedTerms } from '../logic/BreedTerms'
-import { BreedsCollection } from '../logic/BreedsCollection'
-import { Mode } from '../logic/Mode'
+import { Mode } from '../types'
+import { BreedsRecord, BreedTerms, BreedLists } from '../types'
+import { Update } from '../logic/Update'
 
 export const useSearchTerms = (
-  breeds: Stateful<BreedsCollection>,
+  breeds: Update<BreedsRecord>,
   randomMode: Stateful<Mode>
 ) => {
-  const [terms, resetTerms] = useInstance(BreedTerms)
-  const [lists, resetLists] = useObject({
-    primaryList: [] as string[],
-    secondaryList: [] as string[],
-  })
-
-  const reset = () => {
-    resetTerms()
-    resetLists()
-  }
+  const [terms] = useObject({
+    primary: null,
+    secondary: null,
+  } as BreedTerms)
+  const [lists] = useObject({
+    primary: [],
+    secondary: [],
+  } as BreedLists)
 
   const randomize = useCallback(
     (primary: boolean = true, secondary: boolean = true) => {
@@ -29,10 +27,10 @@ export const useSearchTerms = (
         return arr[Math.floor(Math.random() * arr.length)]
       }
       if (primary) {
-        terms.selected = selectRandom(lists.primaryList)
+        terms.primary = selectRandom(lists.primary)
       }
       if (secondary) {
-        terms.secondarySelected = selectRandom(lists.secondaryList)
+        terms.secondary = selectRandom(lists.secondary)
       }
     },
     [terms, lists]
@@ -52,29 +50,27 @@ export const useSearchTerms = (
     () =>
       changes(breeds)
         .data.pipe(map((data) => (data ? Object.keys(data) : [])))
-        .subscribe(changes(lists).primaryList),
+        .subscribe(changes(lists).primary),
     [breeds, lists]
   )
 
-  useObserve(() => afterChanges(lists).primaryList.subscribe(() => randomize()), [
-    lists,
-  ])
+  useObserve(() => afterChanges(lists).primary.subscribe(() => randomize()), [lists])
 
   useObserve(
     () =>
       changes(terms)
-        .selected.pipe(
+        .primary.pipe(
           map((selected) =>
             selected && breeds.data?.[selected] ? breeds.data[selected] : []
           )
         )
-        .subscribe(changes(lists).secondaryList),
+        .subscribe(changes(lists).secondary),
     [terms, lists]
   )
 
   useObserve(() => {
     return changes(terms)
-      .selected.pipe(filter((selected) => !!selected))
+      .primary.pipe(filter((selected) => !!selected))
       .subscribe(() => {
         randomize(false)
       })
@@ -84,6 +80,5 @@ export const useSearchTerms = (
     terms,
     lists,
     randomize,
-    reset,
   }
 }

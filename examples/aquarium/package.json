@@ -14,8 +14,9 @@
     "@objects/hooks": "^0.1.0",
     "@objects/operators": "^0.1.0",
     "faker": "4.1.0",
-    "preact": "10.4.5",
-    "rxjs": "^6.5.5"
+    "preact": "^10.4.6",
+    "rxjs": "^6.5.5",
+    "ml-kmeans": "5.0.0"
   },
   "devDependencies": {
     "@types/react": "16.9.19",

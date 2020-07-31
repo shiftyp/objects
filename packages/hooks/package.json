@@ -1,7 +1,7 @@
 {
   "name": "@objects/hooks",
   "version": "0.1.0",
-  "description": "A set of react hooks built around objects and mutability",
+  "description": "Hooks for observable objects",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "repository": "https://github.com/shiftyp/objects.git",
@@ -12,7 +12,7 @@
     "prepublish": "npm run build"
   },
   "devDependencies": {
-    "typescript": "^3.8.3"
+    "typescript": "^3.9.2"
   },
   "dependencies": {
     "symbol-observable": "^1.2.0",
